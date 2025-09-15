@@ -14,7 +14,8 @@ import {
   Settings,
   Home,
   Menu,
-  X
+  X,
+  BarChart3
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -30,6 +31,7 @@ const Navigation = () => {
     { path: '/psicologo', icon: UserCheck, label: 'Psicólogo' },
     { path: '/grupos', icon: Users, label: 'Grupos' },
     { path: '/recursos', icon: BookOpen, label: 'Recursos' },
+    { path: '/evaluaciones', icon: BarChart3, label: 'Evaluaciones' },
     { path: '/configuracion', icon: Settings, label: 'Configuración' },
   ];
 
