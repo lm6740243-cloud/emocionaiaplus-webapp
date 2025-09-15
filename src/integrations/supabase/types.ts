@@ -19,8 +19,12 @@ export type Database = {
           atendida: boolean | null
           contacto_emergencia_notificado: boolean | null
           created_at: string
+          fuente: string
+          grupo_id: string | null
           id: string
           mensaje_detectado: string
+          mensaje_id: string | null
+          nivel_severidad: string
           notas_seguimiento: string | null
           palabras_clave: string[]
           profesional_notificado: boolean | null
@@ -32,8 +36,12 @@ export type Database = {
           atendida?: boolean | null
           contacto_emergencia_notificado?: boolean | null
           created_at?: string
+          fuente?: string
+          grupo_id?: string | null
           id?: string
           mensaje_detectado: string
+          mensaje_id?: string | null
+          nivel_severidad?: string
           notas_seguimiento?: string | null
           palabras_clave: string[]
           profesional_notificado?: boolean | null
@@ -45,8 +53,12 @@ export type Database = {
           atendida?: boolean | null
           contacto_emergencia_notificado?: boolean | null
           created_at?: string
+          fuente?: string
+          grupo_id?: string | null
           id?: string
           mensaje_detectado?: string
+          mensaje_id?: string | null
+          nivel_severidad?: string
           notas_seguimiento?: string | null
           palabras_clave?: string[]
           profesional_notificado?: boolean | null
@@ -54,7 +66,22 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "alertas_riesgo_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "alertas_riesgo_mensaje_id_fkey"
+            columns: ["mensaje_id"]
+            isOneToOne: false
+            referencedRelation: "grupo_mensajes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       appointments: {
         Row: {
@@ -266,6 +293,33 @@ export type Database = {
         }
         Relationships: []
       }
+      crisis_keywords: {
+        Row: {
+          activo: boolean
+          categoria: string
+          created_at: string
+          id: string
+          palabra: string
+          severidad: string
+        }
+        Insert: {
+          activo?: boolean
+          categoria: string
+          created_at?: string
+          id?: string
+          palabra: string
+          severidad?: string
+        }
+        Update: {
+          activo?: boolean
+          categoria?: string
+          created_at?: string
+          id?: string
+          palabra?: string
+          severidad?: string
+        }
+        Relationships: []
+      }
       emergency_alerts: {
         Row: {
           alert_time: string
@@ -447,28 +501,43 @@ export type Database = {
         Row: {
           activo: boolean
           alias: string
+          baneado: boolean | null
+          fecha_ban: string | null
           fecha_union: string
           grupo_id: string
           id: string
+          moderado_por: string | null
+          razon_ban: string | null
           rol: string
+          silenciado_hasta: string | null
           user_id: string
         }
         Insert: {
           activo?: boolean
           alias: string
+          baneado?: boolean | null
+          fecha_ban?: string | null
           fecha_union?: string
           grupo_id: string
           id?: string
+          moderado_por?: string | null
+          razon_ban?: string | null
           rol?: string
+          silenciado_hasta?: string | null
           user_id: string
         }
         Update: {
           activo?: boolean
           alias?: string
+          baneado?: boolean | null
+          fecha_ban?: string | null
           fecha_union?: string
           grupo_id?: string
           id?: string
+          moderado_por?: string | null
+          razon_ban?: string | null
           rol?: string
+          silenciado_hasta?: string | null
           user_id?: string
         }
         Relationships: [
@@ -547,6 +616,50 @@ export type Database = {
             columns: ["mensaje_id"]
             isOneToOne: false
             referencedRelation: "grupo_mensajes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      moderador_chat_privado: {
+        Row: {
+          enviado_por: string
+          fecha_envio: string
+          grupo_id: string
+          id: string
+          leido: boolean
+          mensaje: string
+          miembro_id: string
+          moderador_id: string
+          tipo_mensaje: string
+        }
+        Insert: {
+          enviado_por: string
+          fecha_envio?: string
+          grupo_id: string
+          id?: string
+          leido?: boolean
+          mensaje: string
+          miembro_id: string
+          moderador_id: string
+          tipo_mensaje?: string
+        }
+        Update: {
+          enviado_por?: string
+          fecha_envio?: string
+          grupo_id?: string
+          id?: string
+          leido?: boolean
+          mensaje?: string
+          miembro_id?: string
+          moderador_id?: string
+          tipo_mensaje?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "moderador_chat_privado_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
             referencedColumns: ["id"]
           },
         ]
@@ -784,6 +897,42 @@ export type Database = {
         }
         Relationships: []
       }
+      recursos_emergencia: {
+        Row: {
+          activo: boolean
+          descripcion: string | null
+          disponibilidad: string
+          id: string
+          nombre: string
+          orden: number | null
+          pais: string
+          telefono: string
+          tipo: string
+        }
+        Insert: {
+          activo?: boolean
+          descripcion?: string | null
+          disponibilidad?: string
+          id?: string
+          nombre: string
+          orden?: number | null
+          pais?: string
+          telefono: string
+          tipo: string
+        }
+        Update: {
+          activo?: boolean
+          descripcion?: string | null
+          disponibilidad?: string
+          id?: string
+          nombre?: string
+          orden?: number | null
+          pais?: string
+          telefono?: string
+          tipo?: string
+        }
+        Relationships: []
+      }
       resources: {
         Row: {
           content: string | null
@@ -1011,6 +1160,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      detect_crisis_in_message: {
+        Args: {
+          mensaje_contenido: string
+          p_grupo_id: string
+          p_mensaje_id: string
+          p_user_id: string
+        }
+        Returns: boolean
+      }
+      moderate_member: {
+        Args: {
+          p_action: string
+          p_duration_hours?: number
+          p_grupo_id: string
+          p_reason?: string
+          p_target_user_id: string
+        }
+        Returns: boolean
+      }
       update_user_presence: {
         Args: { p_en_linea?: boolean; p_grupo_id: string }
         Returns: undefined

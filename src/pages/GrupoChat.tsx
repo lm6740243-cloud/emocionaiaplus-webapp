@@ -31,6 +31,8 @@ import {
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { CrisisHelpModal } from '@/components/groups/CrisisHelpModal';
+import { ModerationPanel } from '@/components/groups/ModerationPanel';
 
 interface Message {
   id: string;
@@ -58,6 +60,8 @@ interface Member {
   activo: boolean;
   en_linea?: boolean;
   ultima_actividad?: string;
+  silenciado_hasta?: string;
+  baneado?: boolean;
 }
 
 interface Group {
@@ -91,11 +95,14 @@ export default function GrupoChat() {
   const [members, setMembers] = useState<Member[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [currentMember, setCurrentMember] = useState<Member | null>(null);
+  const [userProfile, setUserProfile] = useState<any>(null);
   const [newMessage, setNewMessage] = useState('');
   const [replyingTo, setReplyingTo] = useState<Message | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [showMembersSidebar, setShowMembersSidebar] = useState(false);
   const [showReportDialog, setShowReportDialog] = useState<Message | null>(null);
+  const [showCrisisModal, setShowCrisisModal] = useState(false);
+  const [showModerationPanel, setShowModerationPanel] = useState(false);
   const [lastMessageTime, setLastMessageTime] = useState<Date | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -141,6 +148,15 @@ export default function GrupoChat() {
         }
 
         setCurrentMember(membership as Member);
+
+        // Load user profile for emergency contact
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('emergency_contact_name, emergency_contact_phone')
+          .eq('user_id', user.id)
+          .single();
+
+        setUserProfile(profile);
 
         // Load group info
         await loadGroup();
@@ -367,6 +383,13 @@ export default function GrupoChat() {
 
     if (!checkSlowMode()) return;
 
+    // Check if user is silenced
+    if (currentMember?.silenciado_hasta && new Date(currentMember.silenciado_hasta) > new Date()) {
+      const remainingTime = Math.ceil((new Date(currentMember.silenciado_hasta).getTime() - Date.now()) / (1000 * 60));
+      toast.error(`Estás silenciado. Podrás escribir nuevamente en ${remainingTime} minutos.`);
+      return;
+    }
+
     try {
       const messageData: any = {
         grupo_id: grupoId,
@@ -387,11 +410,32 @@ export default function GrupoChat() {
         };
       }
 
-      const { error } = await supabase
+      const { data: messageResult, error } = await supabase
         .from('grupo_mensajes')
-        .insert(messageData);
+        .insert(messageData)
+        .select('id')
+        .single();
 
       if (error) throw error;
+
+      // Check for crisis keywords after message is sent
+      if (messageResult?.id) {
+        try {
+          const { data: hasCrisis } = await supabase.rpc('detect_crisis_in_message', {
+            mensaje_contenido: newMessage.trim(),
+            p_grupo_id: grupoId,
+            p_mensaje_id: messageResult.id,
+            p_user_id: currentUser.id
+          });
+
+          if (hasCrisis) {
+            setShowCrisisModal(true);
+          }
+        } catch (crisisError) {
+          console.error('Error detecting crisis:', crisisError);
+          // Don't block message sending if crisis detection fails
+        }
+      }
 
       setNewMessage('');
       setReplyingTo(null);
@@ -525,6 +569,20 @@ export default function GrupoChat() {
                 <Clock className="h-3 w-3" />
                 Modo lento: {group.modo_lento_segundos}s
               </Badge>
+            )}
+            
+            {(currentMember?.rol === 'moderador' || currentMember?.rol === 'propietario') && (
+              <ModerationPanel
+                groupId={grupoId!}
+                currentUserRole={currentMember.rol}
+                members={members}
+                onMemberModerated={loadMembers}
+              >
+                <Button variant="outline" size="sm">
+                  <Shield className="h-4 w-4 mr-1" />
+                  Moderación
+                </Button>
+              </ModerationPanel>
             )}
             
             <Sheet open={showMembersSidebar} onOpenChange={setShowMembersSidebar}>
@@ -772,6 +830,20 @@ export default function GrupoChat() {
           </div>
         </div>
       </div>
+
+      {/* Crisis Help Modal */}
+      {currentUser && (
+        <CrisisHelpModal
+          open={showCrisisModal}
+          onOpenChange={setShowCrisisModal}
+          userEmergencyContact={
+            currentMember ? {
+              name: userProfile?.emergency_contact_name || 'Contacto de Emergencia',
+              phone: userProfile?.emergency_contact_phone || ''
+            } : undefined
+          }
+        />
+      )}
     </div>
   );
 }
