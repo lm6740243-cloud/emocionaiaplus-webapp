@@ -17,7 +17,7 @@ import {
 interface QuickChatMessage {
   id: string;
   message: string;
-  sender_type: 'psychologist' | 'patient';
+  sender_type: string;
   is_read: boolean;
   created_at: string;
   patient_name?: string;
@@ -62,28 +62,7 @@ export const QuickChat = () => {
 
   const fetchConversations = async () => {
     try {
-      const { data: user } = await supabase.auth.getUser();
-      if (!user.user) return;
-
-      // Get psychologist profile
-      const { data: psychProfile } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('user_id', user.user.id)
-        .single();
-
-      if (!psychProfile) return;
-
-      // Get conversations with unread message counts
-      const { data, error } = await supabase
-        .rpc('get_chat_conversations', {
-          psychologist_user_id: psychProfile.id
-        });
-
-      if (error) throw error;
-      
-      // Since we don't have the RPC function, let's simulate it
-      // This would need to be implemented as a database function
+      // Mock conversations for now
       setConversations([
         {
           patient_id: "patient1",

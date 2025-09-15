@@ -242,6 +242,7 @@ const Psicologo = () => {
               </Button>
             </CardContent>
           </Card>
+        </div>
           </TabsContent>
 
           <TabsContent value="patients">

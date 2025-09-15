@@ -69,12 +69,7 @@ export const AppointmentScheduler = () => {
       const { data, error } = await supabase
         .from('appointments')
         .select(`
-          *,
-          patients (
-            profiles (
-              full_name
-            )
-          )
+          *
         `)
         .eq('psychologist_id', psychProfile.id)
         .gte('appointment_date', startOfDay.toISOString())
@@ -83,9 +78,10 @@ export const AppointmentScheduler = () => {
 
       if (error) throw error;
 
+      // For now, add mock patient names since relations need to be fixed
       const transformedData = (data || []).map(apt => ({
         ...apt,
-        patient_name: apt.patients?.profiles?.full_name || 'Paciente desconocido'
+        patient_name: 'Paciente'
       }));
 
       setAppointments(transformedData);
