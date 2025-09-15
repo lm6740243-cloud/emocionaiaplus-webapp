@@ -329,6 +329,44 @@ export type Database = {
         }
         Relationships: []
       }
+      patient_resources: {
+        Row: {
+          assigned_at: string
+          id: string
+          notes: string | null
+          patient_id: string
+          psychologist_id: string
+          resource_id: string
+          status: string
+        }
+        Insert: {
+          assigned_at?: string
+          id?: string
+          notes?: string | null
+          patient_id: string
+          psychologist_id: string
+          resource_id: string
+          status?: string
+        }
+        Update: {
+          assigned_at?: string
+          id?: string
+          notes?: string | null
+          patient_id?: string
+          psychologist_id?: string
+          resource_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "patient_resources_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       patients: {
         Row: {
           address: string | null
@@ -464,6 +502,72 @@ export type Database = {
         }
         Relationships: []
       }
+      quick_chats: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          message: string
+          patient_id: string
+          psychologist_id: string
+          sender_type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message: string
+          patient_id: string
+          psychologist_id: string
+          sender_type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message?: string
+          patient_id?: string
+          psychologist_id?: string
+          sender_type?: string
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          content: string | null
+          created_at: string
+          description: string | null
+          id: string
+          psychologist_id: string
+          resource_type: string
+          title: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          psychologist_id: string
+          resource_type: string
+          title: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          psychologist_id?: string
+          resource_type?: string
+          title?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       support_groups: {
         Row: {
           city: string
@@ -500,6 +604,45 @@ export type Database = {
           name?: string
           region?: string
           whatsapp_link?: string | null
+        }
+        Relationships: []
+      }
+      tasks: {
+        Row: {
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          patient_id: string
+          priority: string
+          psychologist_id: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          patient_id: string
+          priority?: string
+          psychologist_id: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          patient_id?: string
+          priority?: string
+          psychologist_id?: string
+          status?: string
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }

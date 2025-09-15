@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PatientList } from "@/components/psychologist/PatientList";
+import { AppointmentScheduler } from "@/components/psychologist/AppointmentScheduler";
+import { TaskManager } from "@/components/psychologist/TaskManager";
+import { QuickChat } from "@/components/psychologist/QuickChat";
 import { 
   UserCheck, 
   Calendar, 
@@ -10,10 +16,14 @@ import {
   Users, 
   FileText, 
   MessageSquare,
-  AlertCircle
+  AlertCircle,
+  CheckSquare
 } from "lucide-react";
 
 const Psicologo = () => {
+  const [selectedPatient, setSelectedPatient] = useState(null);
+  const [activeTab, setActiveTab] = useState("dashboard");
+
   const todayAppointments = [
     { name: "María González", time: "09:00", status: "confirmada", type: "Primera consulta" },
     { name: "Carlos Ruiz", time: "10:30", status: "pendiente", type: "Seguimiento" },
@@ -31,6 +41,17 @@ const Psicologo = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-secondary/10 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
+        
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="patients">Pacientes</TabsTrigger>
+            <TabsTrigger value="appointments">Citas</TabsTrigger>
+            <TabsTrigger value="tasks">Tareas</TabsTrigger>
+            <TabsTrigger value="chat">Chat</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="dashboard" className="space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -221,7 +242,24 @@ const Psicologo = () => {
               </Button>
             </CardContent>
           </Card>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="patients">
+            <PatientList onSelectPatient={setSelectedPatient} />
+          </TabsContent>
+
+          <TabsContent value="appointments">
+            <AppointmentScheduler />
+          </TabsContent>
+
+          <TabsContent value="tasks">
+            <TaskManager />
+          </TabsContent>
+
+          <TabsContent value="chat">
+            <QuickChat />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
