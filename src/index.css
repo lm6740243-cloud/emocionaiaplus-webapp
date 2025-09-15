@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Tema EmocionalIA+ - Colores cálidos y terapéuticos */
+    /* Tema por defecto - Neutral */
     --background: 220 20% 98%;
     --foreground: 215 25% 15%;
 
@@ -18,19 +18,18 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    /* Azul terapéutico como color principal */
+    /* Colores base neutros */
     --primary: 210 85% 60%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 210 85% 70%;
+    --primary-accent: 180 70% 55%;
 
-    /* Verde relajante como secundario */
     --secondary: 150 40% 92%;
     --secondary-foreground: 150 60% 20%;
 
     --muted: 220 15% 95%;
     --muted-foreground: 215 15% 50%;
 
-    /* Acento cálido */
     --accent: 35 80% 85%;
     --accent-foreground: 35 60% 25%;
 
@@ -41,12 +40,13 @@ All colors MUST be HSL.
     --input: 220 15% 95%;
     --ring: 210 85% 60%;
 
-    /* Gradientes personalizados */
-    --gradient-primary: linear-gradient(135deg, hsl(210, 85%, 60%), hsl(150, 70%, 55%));
+    /* Gradientes base */
+    --gradient-primary: linear-gradient(135deg, hsl(210, 85%, 60%), hsl(180, 70%, 55%));
     --gradient-hero: linear-gradient(135deg, hsl(210, 85%, 60%) 0%, hsl(180, 70%, 50%) 50%, hsl(150, 70%, 55%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(220, 20%, 98%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(35, 80%, 85%), hsl(150, 70%, 85%));
     
-    /* Sombras elegantes */
+    /* Sombras base */
     --shadow-soft: 0 4px 20px -2px hsl(210, 85%, 60%, 0.1);
     --shadow-card: 0 8px 30px -4px hsl(210, 85%, 60%, 0.15);
     --shadow-glow: 0 0 40px hsl(210, 85%, 70%, 0.3);
@@ -74,8 +74,80 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  /* Tema Masculino - Azules (#2DA0FA, #89BFFB, #46D3F0) */
+  .theme-masculino {
+    --primary: 210 98% 58%; /* #2DA0FA */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 210 90% 75%; /* #89BFFB */
+    --primary-accent: 190 100% 62%; /* #46D3F0 */
+
+    --secondary: 210 100% 95%;
+    --secondary-foreground: 210 90% 25%;
+
+    --accent: 190 100% 85%;
+    --accent-foreground: 190 80% 25%;
+
+    --ring: 210 98% 58%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(210, 98%, 58%), hsl(210, 90%, 75%));
+    --gradient-hero: linear-gradient(135deg, hsl(210, 98%, 58%) 0%, hsl(190, 100%, 62%) 50%, hsl(210, 90%, 75%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(210, 90%, 85%), hsl(190, 100%, 85%));
+    
+    --shadow-soft: 0 4px 20px -2px hsl(210, 98%, 58%, 0.15);
+    --shadow-card: 0 8px 30px -4px hsl(210, 98%, 58%, 0.2);
+    --shadow-glow: 0 0 40px hsl(210, 90%, 75%, 0.4);
+  }
+
+  /* Tema Femenino - Fucsia-Morado (#FF4FC1, #7A2BEB) */
+  .theme-femenino {
+    --primary: 315 100% 65%; /* #FF4FC1 */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 315 85% 75%;
+    --primary-accent: 258 82% 54%; /* #7A2BEB */
+
+    --secondary: 315 100% 95%;
+    --secondary-foreground: 315 80% 25%;
+
+    --accent: 280 85% 85%;
+    --accent-foreground: 280 70% 25%;
+
+    --ring: 315 100% 65%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(315, 100%, 65%), hsl(258, 82%, 54%));
+    --gradient-hero: linear-gradient(135deg, hsl(315, 100%, 65%) 0%, hsl(280, 85%, 70%) 50%, hsl(258, 82%, 54%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(315, 80%, 85%), hsl(280, 85%, 85%));
+    
+    --shadow-soft: 0 4px 20px -2px hsl(315, 100%, 65%, 0.15);
+    --shadow-card: 0 8px 30px -4px hsl(315, 100%, 65%, 0.2);
+    --shadow-glow: 0 0 40px hsl(315, 85%, 75%, 0.4);
+  }
+
+  /* Tema No Binario - Verdes y lilas suaves */
+  .theme-no-binario {
+    --primary: 150 60% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 150 50% 65%;
+    --primary-accent: 280 50% 70%;
+
+    --secondary: 150 40% 92%;
+    --secondary-foreground: 150 60% 25%;
+
+    --accent: 280 40% 85%;
+    --accent-foreground: 280 50% 25%;
+
+    --ring: 150 60% 55%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(150, 60%, 55%), hsl(280, 50%, 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(150, 60%, 55%) 0%, hsl(200, 50%, 65%) 50%, hsl(280, 50%, 70%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(150, 40%, 85%), hsl(280, 40%, 85%));
+    
+    --shadow-soft: 0 4px 20px -2px hsl(150, 60%, 55%, 0.12);
+    --shadow-card: 0 8px 30px -4px hsl(150, 60%, 55%, 0.15);
+    --shadow-glow: 0 0 40px hsl(150, 50%, 65%, 0.3);
+  }
+
   .dark {
-    /* Modo oscuro cálido y relajante */
+    /* Modo oscuro base */
     --background: 220 25% 8%;
     --foreground: 220 15% 92%;
 
@@ -85,34 +157,42 @@ All colors MUST be HSL.
     --popover: 220 20% 12%;
     --popover-foreground: 220 15% 92%;
 
-    --primary: 210 85% 65%;
-    --primary-foreground: 220 25% 8%;
-    --primary-glow: 210 85% 75%;
-
     --secondary: 220 15% 18%;
     --secondary-foreground: 220 15% 85%;
 
     --muted: 220 15% 15%;
     --muted-foreground: 220 10% 60%;
 
-    --accent: 35 60% 25%;
-    --accent-foreground: 35 80% 85%;
-
     --destructive: 0 65% 55%;
     --destructive-foreground: 220 15% 92%;
 
     --border: 220 15% 20%;
     --input: 220 15% 18%;
-    --ring: 210 85% 65%;
 
-    /* Gradientes modo oscuro */
-    --gradient-primary: linear-gradient(135deg, hsl(210, 85%, 65%), hsl(150, 60%, 45%));
-    --gradient-hero: linear-gradient(135deg, hsl(210, 85%, 65%) 0%, hsl(180, 60%, 40%) 50%, hsl(150, 60%, 45%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(220, 20%, 12%) 0%, hsl(220, 25%, 8%) 100%);
     
     --shadow-soft: 0 4px 20px -2px hsl(0, 0%, 0%, 0.3);
     --shadow-card: 0 8px 30px -4px hsl(0, 0%, 0%, 0.4);
-    --shadow-glow: 0 0 40px hsl(210, 85%, 75%, 0.2);
+  }
+
+  /* Temas oscuros específicos */
+  .dark.theme-masculino {
+    --primary: 210 98% 65%;
+    --primary-glow: 210 90% 75%;
+    --shadow-glow: 0 0 40px hsl(210, 90%, 75%, 0.25);
+  }
+
+  .dark.theme-femenino {
+    --primary: 315 90% 70%;
+    --primary-glow: 315 80% 80%;
+    --shadow-glow: 0 0 40px hsl(315, 80%, 80%, 0.25);
+  }
+
+  .dark.theme-no-binario {
+    --primary: 150 55% 60%;
+    --primary-glow: 150 45% 70%;
+    --shadow-glow: 0 0 40px hsl(150, 45%, 70%, 0.25);
+  }
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

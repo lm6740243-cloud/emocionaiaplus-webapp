@@ -8,7 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Heart, User } from "lucide-react";
+import { Heart, User, Palette } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const formSchema = z.object({
   rol: z.enum(["paciente", "psicologo"], {
@@ -35,6 +36,8 @@ interface OnboardingFormProps {
 }
 
 const OnboardingForm = ({ onComplete }: OnboardingFormProps) => {
+  const { applyGenderTheme } = useTheme();
+  
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,8 +56,13 @@ const OnboardingForm = ({ onComplete }: OnboardingFormProps) => {
   });
 
   const watchedRole = form.watch("rol");
+  const watchedGender = form.watch("sexo");
 
   const onSubmit = (data: FormData) => {
+    // Aplicar tema basado en el sexo seleccionado
+    if (data.sexo) {
+      applyGenderTheme(data.sexo);
+    }
     onComplete(data);
   };
 
@@ -78,11 +86,19 @@ const OnboardingForm = ({ onComplete }: OnboardingFormProps) => {
         <CardDescription className="text-muted-foreground">
           Estos datos nos ayudarán a personalizar tu experiencia en EmocionalIA+
         </CardDescription>
-        {watchedRole && (
-          <Badge variant="secondary" className="mx-auto mt-2 animate-fade-in">
-            {watchedRole === "paciente" ? "Paciente" : "Psicólogo Profesional"}
-          </Badge>
-        )}
+        <div className="flex gap-2 justify-center">
+          {watchedRole && (
+            <Badge variant="secondary" className="animate-fade-in">
+              {watchedRole === "paciente" ? "Paciente" : "Psicólogo Profesional"}
+            </Badge>
+          )}
+          {watchedGender && (
+            <Badge variant="outline" className="animate-fade-in">
+              <Palette className="w-3 h-3 mr-1" />
+              Tema personalizado activado
+            </Badge>
+          )}
+        </div>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -148,17 +164,43 @@ const OnboardingForm = ({ onComplete }: OnboardingFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Sexo</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select onValueChange={(value) => {
+                      field.onChange(value);
+                      // Vista previa del tema al seleccionar
+                      if (value) {
+                        applyGenderTheme(value as any);
+                      }
+                    }} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecciona" />
+                        <SelectTrigger className="transition-all duration-300">
+                          <SelectValue placeholder="Selecciona tu identidad" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="masculino">Masculino</SelectItem>
-                        <SelectItem value="femenino">Femenino</SelectItem>
-                        <SelectItem value="otro">Otro</SelectItem>
-                        <SelectItem value="prefiero_no_decir">Prefiero no decir</SelectItem>
+                        <SelectItem value="masculino">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                            Masculino
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="femenino">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-pink-500"></div>
+                            Femenino
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="otro">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-400 to-purple-400"></div>
+                            No binario
+                          </div>
+                        </SelectItem>
+                        <SelectItem value="prefiero_no_decir">
+                          <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-gradient-to-r from-green-400 to-purple-400"></div>
+                            Prefiero no decir
+                          </div>
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

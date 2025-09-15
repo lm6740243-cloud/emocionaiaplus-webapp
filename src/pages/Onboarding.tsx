@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Brain, Sparkles } from "lucide-react";
 import OnboardingForm from "@/components/OnboardingForm";
 import BreathingExercise from "@/components/BreathingExercise";
+import ThemePreview from "@/components/ThemePreview";
 import { useToast } from "@/components/ui/use-toast";
 
 const Onboarding = () => {
@@ -141,7 +142,7 @@ const Onboarding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-secondary/10 p-4">
-      <div className="max-w-2xl mx-auto py-8 space-y-8">
+      <div className="max-w-6xl mx-auto py-8 space-y-8">
         {/* Progress indicator */}
         <div className="text-center">
           <Badge variant="secondary">Paso 2 de 2: Tu perfil</Badge>
@@ -159,8 +160,13 @@ const Onboarding = () => {
         </div>
 
         {/* Form */}
-        <div className="animate-fade-in">
-          <OnboardingForm onComplete={handleFormComplete} />
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 animate-fade-in">
+          <div className="xl:col-span-2">
+            <OnboardingForm onComplete={handleFormComplete} />
+          </div>
+          <div className="space-y-6">
+            <ThemePreview />
+          </div>
         </div>
       </div>
     </div>
