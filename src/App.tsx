@@ -13,6 +13,7 @@ import Psicologo from "./pages/Psicologo";
 import Configuracion from "./pages/Configuracion";
 import Recursos from "./pages/Recursos";
 import Grupos from "./pages/Grupos";
+import AIChatPage from "./pages/AIChat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
                 <Route path="/configuracion" element={<Configuracion />} />
                 <Route path="/recursos" element={<Recursos />} />
                 <Route path="/grupos" element={<Grupos />} />
+                <Route path="/ai-chat" element={<AIChatPage />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

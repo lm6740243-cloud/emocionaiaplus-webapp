@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      alertas_riesgo: {
+        Row: {
+          atendida: boolean | null
+          contacto_emergencia_notificado: boolean | null
+          created_at: string
+          id: string
+          mensaje_detectado: string
+          notas_seguimiento: string | null
+          palabras_clave: string[]
+          profesional_notificado: boolean | null
+          timestamp: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          atendida?: boolean | null
+          contacto_emergencia_notificado?: boolean | null
+          created_at?: string
+          id?: string
+          mensaje_detectado: string
+          notas_seguimiento?: string | null
+          palabras_clave: string[]
+          profesional_notificado?: boolean | null
+          timestamp?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          atendida?: boolean | null
+          contacto_emergencia_notificado?: boolean | null
+          created_at?: string
+          id?: string
+          mensaje_detectado?: string
+          notas_seguimiento?: string | null
+          palabras_clave?: string[]
+          profesional_notificado?: boolean | null
+          timestamp?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           appointment_date: string
@@ -83,6 +125,39 @@ export type Database = {
           status?: string | null
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          role: string
+          session_id: string | null
+          timestamp: string
+          tone: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          role: string
+          session_id?: string | null
+          timestamp?: string
+          tone?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          role?: string
+          session_id?: string | null
+          timestamp?: string
+          tone?: string | null
+          user_id?: string
         }
         Relationships: []
       }
@@ -348,6 +423,9 @@ export type Database = {
         Row: {
           created_at: string
           email: string
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          emergency_contact_relation: string | null
           full_name: string
           gender: string | null
           id: string
@@ -359,6 +437,9 @@ export type Database = {
         Insert: {
           created_at?: string
           email: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relation?: string | null
           full_name: string
           gender?: string | null
           id?: string
@@ -370,6 +451,9 @@ export type Database = {
         Update: {
           created_at?: string
           email?: string
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          emergency_contact_relation?: string | null
           full_name?: string
           gender?: string | null
           id?: string
