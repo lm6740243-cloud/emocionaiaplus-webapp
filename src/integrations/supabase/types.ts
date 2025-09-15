@@ -128,6 +128,48 @@ export type Database = {
         }
         Relationships: []
       }
+      calendar_events: {
+        Row: {
+          break_recommended: boolean | null
+          break_scheduled: boolean | null
+          created_at: string
+          event_end: string
+          event_start: string
+          event_title: string
+          id: string
+          is_stressful: boolean | null
+          stress_level: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          break_recommended?: boolean | null
+          break_scheduled?: boolean | null
+          created_at?: string
+          event_end: string
+          event_start: string
+          event_title: string
+          id?: string
+          is_stressful?: boolean | null
+          stress_level?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          break_recommended?: boolean | null
+          break_scheduled?: boolean | null
+          created_at?: string
+          event_end?: string
+          event_start?: string
+          event_title?: string
+          id?: string
+          is_stressful?: boolean | null
+          stress_level?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chat_messages: {
         Row: {
           created_at: string
@@ -268,6 +310,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      external_data: {
+        Row: {
+          created_at: string
+          data_type: string
+          date: string
+          device_source: string | null
+          id: string
+          timestamp: string
+          unit: string
+          updated_at: string
+          user_id: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          data_type: string
+          date?: string
+          device_source?: string | null
+          id?: string
+          timestamp?: string
+          unit: string
+          updated_at?: string
+          user_id: string
+          value: number
+        }
+        Update: {
+          created_at?: string
+          data_type?: string
+          date?: string
+          device_source?: string | null
+          id?: string
+          timestamp?: string
+          unit?: string
+          updated_at?: string
+          user_id?: string
+          value?: number
+        }
+        Relationships: []
       }
       fees: {
         Row: {
@@ -643,6 +724,45 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      wellness_recommendations: {
+        Row: {
+          created_at: string
+          description: string
+          expires_at: string | null
+          id: string
+          is_active: boolean | null
+          priority: number | null
+          recommendation_type: string
+          title: string
+          trigger_data: Json | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          priority?: number | null
+          recommendation_type: string
+          title: string
+          trigger_data?: Json | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          priority?: number | null
+          recommendation_type?: string
+          title?: string
+          trigger_data?: Json | null
+          user_id?: string
         }
         Relationships: []
       }

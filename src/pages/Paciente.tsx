@@ -7,9 +7,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart, Calendar, TrendingUp, BookOpen, Users, MessageCircle, Bell, Settings, User, ChevronRight } from "lucide-react";
 import AIAssistantCard from "@/components/patient/AIAssistantCard";
 import ExercisesCard from "@/components/patient/ExercisesCard";
-import LibraryCard from "@/components/patient/LibraryCard";
 import MoodTrackerCard from "@/components/patient/MoodTrackerCard";
+import LibraryCard from "@/components/patient/LibraryCard";
 import GamificationCard from "@/components/patient/GamificationCard";
+import { ExternalDataDashboard } from "@/components/integrations/ExternalDataDashboard";
 
 const Paciente = () => {
   const [userName] = useState("María");
@@ -118,6 +119,9 @@ const Paciente = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* External Data Integration Section */}
+        <ExternalDataDashboard />
 
         {/* Tarjetas principales del panel */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
