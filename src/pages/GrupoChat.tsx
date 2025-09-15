@@ -12,6 +12,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/co
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   ArrowLeft, 
   Send, 
@@ -26,13 +27,16 @@ import {
   Crown,
   Circle,
   Clock,
-  Settings
+  Settings,
+  MessageSquare,
+  Calendar
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { CrisisHelpModal } from '@/components/groups/CrisisHelpModal';
 import { ModerationPanel } from '@/components/groups/ModerationPanel';
+import { MeetingsList } from '@/components/groups/MeetingsList';
 
 interface Message {
   id: string;
@@ -105,6 +109,7 @@ export default function GrupoChat() {
   const [showModerationPanel, setShowModerationPanel] = useState(false);
   const [lastMessageTime, setLastMessageTime] = useState<Date | null>(null);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('chat');
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -542,7 +547,7 @@ export default function GrupoChat() {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Main Chat Area */}
+      {/* Main Area */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-card">
@@ -639,196 +644,229 @@ export default function GrupoChat() {
           </div>
         </div>
 
-        {/* Messages Area */}
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4 max-w-4xl mx-auto">
-            {/* Pinned Messages */}
-            {messages.filter(msg => msg.fijado).length > 0 && (
-              <Card className="border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm flex items-center gap-2">
-                    <Pin className="h-4 w-4 text-yellow-600" />
-                    Mensajes Fijados
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {messages.filter(msg => msg.fijado).map((message) => (
-                    <div key={message.id} className="text-sm p-2 rounded bg-background/50">
-                      <span className="font-medium">{message.autor_alias}: </span>
-                      {message.contenido}
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
+        {/* Tabs Navigation */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+          <div className="border-b bg-background">
+            <TabsList className="grid w-full max-w-md grid-cols-2 mx-4">
+              <TabsTrigger value="chat" className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                Chat
+              </TabsTrigger>
+              <TabsTrigger value="meetings" className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Reuniones
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-            {/* Chat Messages */}
-            {messages.map((message) => {
-              const RoleIcon = roleIcons[message.autor_rol];
-              const isHighlighted = message.metadata?.highlight;
-              
-              return (
-                <div
-                  key={message.id}
-                  className={`group flex gap-3 ${isHighlighted ? 'bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200' : ''}`}
-                >
-                  <Avatar className="h-8 w-8 mt-1">
-                    <AvatarFallback className="text-xs">
-                      {message.autor_alias.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
+          {/* Chat Tab */}
+          <TabsContent value="chat" className="flex-1 flex flex-col m-0">
+            {/* Messages Area */}
+            <ScrollArea className="flex-1 p-4">
+              <div className="space-y-4 max-w-4xl mx-auto">
+                {/* Pinned Messages */}
+                {messages.filter(msg => msg.fijado).length > 0 && (
+                  <Card className="border-yellow-200 bg-yellow-50 dark:bg-yellow-900/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm flex items-center gap-2">
+                        <Pin className="h-4 w-4 text-yellow-600" />
+                        Mensajes Fijados
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      {messages.filter(msg => msg.fijado).map((message) => (
+                        <div key={message.id} className="text-sm p-2 rounded bg-background/50">
+                          <span className="font-medium">{message.autor_alias}: </span>
+                          {message.contenido}
+                        </div>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Chat Messages */}
+                {messages.map((message) => {
+                  const RoleIcon = roleIcons[message.autor_rol];
+                  const isHighlighted = message.metadata?.highlight;
                   
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium">{message.autor_alias}</span>
-                      <RoleIcon className={`h-3 w-3 ${roleColors[message.autor_rol]}`} />
-                      <span className="text-xs text-muted-foreground">
-                        {formatMessageTime(message.fecha_creacion)}
-                      </span>
-                      {message.editado && (
-                        <span className="text-xs text-muted-foreground">(editado)</span>
-                      )}
-                    </div>
-                    
-                    {message.respondiendo_a && (
-                      <div className="text-xs text-muted-foreground mb-2 pl-3 border-l-2 border-muted">
-                        Respondiendo a un mensaje
+                  return (
+                    <div
+                      key={message.id}
+                      className={`group flex gap-3 ${isHighlighted ? 'bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg border border-yellow-200' : ''}`}
+                    >
+                      <Avatar className="h-8 w-8 mt-1">
+                        <AvatarFallback className="text-xs">
+                          {message.autor_alias.substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-sm font-medium">{message.autor_alias}</span>
+                          <RoleIcon className={`h-3 w-3 ${roleColors[message.autor_rol]}`} />
+                          <span className="text-xs text-muted-foreground">
+                            {formatMessageTime(message.fecha_creacion)}
+                          </span>
+                          {message.editado && (
+                            <span className="text-xs text-muted-foreground">(editado)</span>
+                          )}
+                        </div>
+                        
+                        {message.respondiendo_a && (
+                          <div className="text-xs text-muted-foreground mb-2 pl-3 border-l-2 border-muted">
+                            Respondiendo a un mensaje
+                          </div>
+                        )}
+                        
+                        <div className="text-sm break-words">{message.contenido}</div>
+                        
+                        {/* Message Actions */}
+                        <div className="flex items-center gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-6 px-2"
+                            onClick={() => setReplyingTo(message)}
+                          >
+                            <Reply className="h-3 w-3" />
+                          </Button>
+                          
+                          {(currentMember?.rol !== 'miembro') && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 px-2"
+                              onClick={() => togglePinMessage(message)}
+                            >
+                              <Pin className={`h-3 w-3 ${message.fijado ? 'text-yellow-600' : ''}`} />
+                            </Button>
+                          )}
+                          
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="ghost" size="sm" className="h-6 px-2">
+                                <Flag className="h-3 w-3" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Reportar Mensaje</DialogTitle>
+                              </DialogHeader>
+                              
+                              <ReportForm
+                                message={message}
+                                onReport={reportMessage}
+                                onCancel={() => setShowReportDialog(null)}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                        </div>
                       </div>
-                    )}
+                    </div>
+                  );
+                })}
+                
+                <div ref={messagesEndRef} />
+              </div>
+            </ScrollArea>
+
+            {/* Message Input */}
+            <div className="border-t p-4 bg-card">
+              <div className="max-w-4xl mx-auto">
+                {replyingTo && (
+                  <div className="flex items-center justify-between mb-3 p-2 bg-muted rounded text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Respondiendo a </span>
+                      <span className="font-medium">{replyingTo.autor_alias}</span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setReplyingTo(null)}
+                    >
+                      ×
+                    </Button>
+                  </div>
+                )}
+                
+                <div className="flex items-end gap-2">
+                  <div className="flex-1 relative">
+                    <Textarea
+                      ref={messageInputRef}
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      onKeyDown={handleKeyPress}
+                      placeholder={`Escribe un mensaje como ${currentMember?.alias}...`}
+                      className="min-h-[44px] max-h-32 resize-none pr-16"
+                      rows={1}
+                    />
                     
-                    <div className="text-sm break-words">{message.contenido}</div>
-                    
-                    {/* Message Actions */}
-                    <div className="flex items-center gap-1 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute right-2 bottom-2 flex items-center gap-1">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-6 px-2"
-                        onClick={() => setReplyingTo(message)}
+                        className="h-6 w-6 p-0"
+                        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                       >
-                        <Reply className="h-3 w-3" />
+                        <Smile className="h-4 w-4" />
                       </Button>
                       
-                      {(currentMember?.rol !== 'miembro') && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2"
-                          onClick={() => togglePinMessage(message)}
-                        >
-                          <Pin className={`h-3 w-3 ${message.fijado ? 'text-yellow-600' : ''}`} />
-                        </Button>
-                      )}
-                      
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-6 px-2">
-                            <Flag className="h-3 w-3" />
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Reportar Mensaje</DialogTitle>
-                          </DialogHeader>
-                          
-                          <ReportForm
-                            message={message}
-                            onReport={reportMessage}
-                            onCancel={() => setShowReportDialog(null)}
-                          />
-                        </DialogContent>
-                      </Dialog>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 w-6 p-0"
+                      >
+                        <Paperclip className="h-4 w-4" />
+                      </Button>
                     </div>
+                    
+                    {/* Emoji Picker */}
+                    {showEmojiPicker && (
+                      <div className="absolute right-0 bottom-full mb-2 bg-popover border rounded-lg p-3 shadow-lg">
+                        <div className="grid grid-cols-6 gap-1">
+                          {emojis.map((emoji, index) => (
+                            <Button
+                              key={index}
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0"
+                              onClick={() => addEmoji(emoji)}
+                            >
+                              {emoji}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-              );
-            })}
-            
-            <div ref={messagesEndRef} />
-          </div>
-        </ScrollArea>
-
-        {/* Message Input */}
-        <div className="border-t p-4 bg-card">
-          <div className="max-w-4xl mx-auto">
-            {replyingTo && (
-              <div className="flex items-center justify-between mb-3 p-2 bg-muted rounded text-sm">
-                <div>
-                  <span className="text-muted-foreground">Respondiendo a </span>
-                  <span className="font-medium">{replyingTo.autor_alias}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setReplyingTo(null)}
-                >
-                  ×
-                </Button>
-              </div>
-            )}
-            
-            <div className="flex items-end gap-2">
-              <div className="flex-1 relative">
-                <Textarea
-                  ref={messageInputRef}
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyDown={handleKeyPress}
-                  placeholder={`Escribe un mensaje como ${currentMember?.alias}...`}
-                  className="min-h-[44px] max-h-32 resize-none pr-16"
-                  rows={1}
-                />
-                
-                <div className="absolute right-2 bottom-2 flex items-center gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-6 w-6 p-0"
-                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  >
-                    <Smile className="h-4 w-4" />
-                  </Button>
                   
                   <Button
-                    variant="ghost"
+                    onClick={sendMessage}
+                    disabled={!newMessage.trim()}
                     size="sm"
-                    className="h-6 w-6 p-0"
+                    className="h-11"
                   >
-                    <Paperclip className="h-4 w-4" />
+                    <Send className="h-4 w-4" />
                   </Button>
                 </div>
-                
-                {/* Emoji Picker */}
-                {showEmojiPicker && (
-                  <div className="absolute right-0 bottom-full mb-2 bg-popover border rounded-lg p-3 shadow-lg">
-                    <div className="grid grid-cols-6 gap-1">
-                      {emojis.map((emoji, index) => (
-                        <Button
-                          key={index}
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0"
-                          onClick={() => addEmoji(emoji)}
-                        >
-                          {emoji}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
-              
-              <Button
-                onClick={sendMessage}
-                disabled={!newMessage.trim()}
-                size="sm"
-                className="h-11"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
             </div>
-          </div>
-        </div>
+          </TabsContent>
+
+          {/* Meetings Tab */}
+          <TabsContent value="meetings" className="flex-1 m-0">
+            <div className="p-6 max-w-4xl mx-auto">
+              <MeetingsList 
+                groupId={grupoId!}
+                currentUserId={currentUser?.id || ''}
+                canCreateMeetings={
+                  currentMember?.rol === 'moderador' || 
+                  currentMember?.rol === 'propietario'
+                }
+              />
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Crisis Help Modal */}

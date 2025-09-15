@@ -620,6 +620,65 @@ export type Database = {
           },
         ]
       }
+      grupo_reuniones: {
+        Row: {
+          activo: boolean
+          creado_por: string
+          created_at: string
+          cupo_max: number | null
+          descripcion: string | null
+          duracion: number
+          enlace_virtual: string | null
+          fecha_hora: string
+          grupo_id: string
+          id: string
+          modalidad: string
+          titulo: string
+          ubicacion_presencial: string | null
+          updated_at: string
+        }
+        Insert: {
+          activo?: boolean
+          creado_por: string
+          created_at?: string
+          cupo_max?: number | null
+          descripcion?: string | null
+          duracion?: number
+          enlace_virtual?: string | null
+          fecha_hora: string
+          grupo_id: string
+          id?: string
+          modalidad: string
+          titulo: string
+          ubicacion_presencial?: string | null
+          updated_at?: string
+        }
+        Update: {
+          activo?: boolean
+          creado_por?: string
+          created_at?: string
+          cupo_max?: number | null
+          descripcion?: string | null
+          duracion?: number
+          enlace_virtual?: string | null
+          fecha_hora?: string
+          grupo_id?: string
+          id?: string
+          modalidad?: string
+          titulo?: string
+          ubicacion_presencial?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_reuniones_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       moderador_chat_privado: {
         Row: {
           enviado_por: string
@@ -969,6 +1028,79 @@ export type Database = {
         }
         Relationships: []
       }
+      reunion_asistentes: {
+        Row: {
+          confirmado: boolean
+          fecha_inscripcion: string
+          id: string
+          recordatorio_enviado_1h: boolean
+          recordatorio_enviado_24h: boolean
+          reunion_id: string
+          user_id: string
+        }
+        Insert: {
+          confirmado?: boolean
+          fecha_inscripcion?: string
+          id?: string
+          recordatorio_enviado_1h?: boolean
+          recordatorio_enviado_24h?: boolean
+          reunion_id: string
+          user_id: string
+        }
+        Update: {
+          confirmado?: boolean
+          fecha_inscripcion?: string
+          id?: string
+          recordatorio_enviado_1h?: boolean
+          recordatorio_enviado_24h?: boolean
+          reunion_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reunion_asistentes_reunion_id_fkey"
+            columns: ["reunion_id"]
+            isOneToOne: false
+            referencedRelation: "grupo_reuniones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reunion_recordatorios: {
+        Row: {
+          canal: string
+          enviado_at: string
+          id: string
+          reunion_id: string
+          tipo_recordatorio: string
+          user_id: string
+        }
+        Insert: {
+          canal?: string
+          enviado_at?: string
+          id?: string
+          reunion_id: string
+          tipo_recordatorio: string
+          user_id: string
+        }
+        Update: {
+          canal?: string
+          enviado_at?: string
+          id?: string
+          reunion_id?: string
+          tipo_recordatorio?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reunion_recordatorios_reunion_id_fkey"
+            columns: ["reunion_id"]
+            isOneToOne: false
+            referencedRelation: "grupo_reuniones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       support_groups: {
         Row: {
           capacidad_max: number | null
@@ -1169,6 +1301,25 @@ export type Database = {
         }
         Returns: boolean
       }
+      get_meeting_with_attendance: {
+        Args: { p_meeting_id: string; p_user_id: string }
+        Returns: {
+          creado_por: string
+          cupo_max: number
+          descripcion: string
+          duracion: number
+          enlace_virtual: string
+          fecha_hora: string
+          grupo_id: string
+          id: string
+          modalidad: string
+          spaces_available: number
+          titulo: string
+          total_asistentes: number
+          ubicacion_presencial: string
+          user_registered: boolean
+        }[]
+      }
       moderate_member: {
         Args: {
           p_action: string
@@ -1178,6 +1329,10 @@ export type Database = {
           p_target_user_id: string
         }
         Returns: boolean
+      }
+      send_meeting_reminders: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
       update_user_presence: {
         Args: { p_en_linea?: boolean; p_grupo_id: string }
