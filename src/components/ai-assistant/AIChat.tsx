@@ -16,12 +16,16 @@ import {
   Settings, 
   RotateCcw,
   AlertTriangle,
-  MessageSquare
+  MessageSquare,
+  Crown
 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useSubscription } from "@/contexts/SubscriptionContext";
 import EmergencyModal from "./EmergencyModal";
 import VoiceInput from "./VoiceInput";
+import PremiumFeature from "../premium/PremiumFeature";
+import FeatureLimit from "../premium/FeatureLimit";
 
 interface Message {
   id: string;
@@ -35,6 +39,7 @@ type ToneType = 'profesional' | 'motivador' | 'relajado';
 
 const AIChat = () => {
   const { toast } = useToast();
+  const { isPremium, tier, hasFeature } = useSubscription();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -44,8 +49,14 @@ const AIChat = () => {
   const [crisisData, setCrisisData] = useState<{ detectedKeywords: string[] } | null>(null);
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [dailyMessageCount, setDailyMessageCount] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Free tier limits
+  const FREE_DAILY_MESSAGES = 10;
+  const canSendMessage = isPremium() || dailyMessageCount < FREE_DAILY_MESSAGES;
+  const canUseVoice = isPremium() || hasFeature('Chat IA con voz');
 
   const toneOptions = {
     profesional: {
@@ -113,6 +124,16 @@ const AIChat = () => {
     const messageToSend = messageText || inputMessage.trim();
     if (!messageToSend) return;
 
+    // Check message limits for free users
+    if (!canSendMessage) {
+      toast({
+        title: "Límite alcanzado",
+        description: `Has alcanzado el límite de ${FREE_DAILY_MESSAGES} mensajes diarios. Actualiza a Premium para mensajes ilimitados.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
     const userMessage: Message = {
       id: `user_${Date.now()}`,
       content: messageToSend,
@@ -123,6 +144,11 @@ const AIChat = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputMessage("");
     setIsLoading(true);
+
+    // Increment message count for free users
+    if (!isPremium()) {
+      setDailyMessageCount(prev => prev + 1);
+    }
 
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -243,13 +269,23 @@ const AIChat = () => {
               Asistente IA EmocionalIA+
             </CardTitle>
             <div className="flex items-center gap-2">
+              {!isPremium() && (
+                <FeatureLimit 
+                  used={dailyMessageCount}
+                  limit={FREE_DAILY_MESSAGES}
+                  feature="mensajes"
+                  unit="hoy"
+                />
+              )}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsVoiceEnabled(!isVoiceEnabled)}
                 className={isVoiceEnabled ? "text-primary" : "text-muted-foreground"}
+                disabled={!canUseVoice}
               >
                 {isVoiceEnabled ? <Volume2 className="h-4 w-4" /> : <VolumeX className="h-4 w-4" />}
+                {!canUseVoice && <Crown className="h-3 w-3 ml-1" />}
               </Button>
               <Button variant="ghost" size="sm" onClick={clearChat}>
                 <RotateCcw className="h-4 w-4" />
@@ -393,22 +429,35 @@ const AIChat = () => {
                   className="resize-none pr-20"
                   rows={2}
                   disabled={isLoading}
-                />
-                <div className="absolute right-2 top-2 flex gap-1">
-                  <VoiceInput
-                    onTranscript={handleVoiceInput}
-                    isRecording={isRecording}
-                    onRecordingChange={setIsRecording}
-                  />
-                  <Button
-                    size="sm"
-                    onClick={() => sendMessage()}
-                    disabled={!inputMessage.trim() || isLoading}
-                    className="h-8 w-8 p-0"
-                  >
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
+                 />
+                 <div className="absolute right-2 top-2 flex gap-1">
+                   {canUseVoice ? (
+                     <VoiceInput
+                       onTranscript={handleVoiceInput}
+                       isRecording={isRecording}
+                       onRecordingChange={setIsRecording}
+                     />
+                   ) : (
+                     <Button
+                       size="sm"
+                       variant="outline"
+                       disabled
+                       className="h-8 w-8 p-0"
+                       title="Función premium"
+                     >
+                       <Mic className="h-4 w-4" />
+                       <Crown className="h-2 w-2 absolute -top-1 -right-1" />
+                     </Button>
+                   )}
+                   <Button
+                     size="sm"
+                     onClick={() => sendMessage()}
+                     disabled={!inputMessage.trim() || isLoading || !canSendMessage}
+                     className="h-8 w-8 p-0"
+                   >
+                     <Send className="h-4 w-4" />
+                   </Button>
+                 </div>
               </div>
             </div>
 

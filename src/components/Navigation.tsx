@@ -15,7 +15,8 @@ import {
   Home,
   Menu,
   X,
-  BarChart3
+  BarChart3,
+  Crown
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -32,6 +33,7 @@ const Navigation = () => {
     { path: '/grupos', icon: Users, label: 'Grupos' },
     { path: '/recursos', icon: BookOpen, label: 'Recursos' },
     { path: '/evaluaciones', icon: BarChart3, label: 'Evaluaciones' },
+    { path: '/suscripcion', icon: Crown, label: 'Suscripción' },
     { path: '/configuracion', icon: Settings, label: 'Configuración' },
   ];
 
