@@ -1,169 +1,244 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Calendar, TrendingUp, BookOpen, Users, MessageCircle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Heart, Calendar, TrendingUp, BookOpen, Users, MessageCircle, Bell, Settings, User, ChevronRight } from "lucide-react";
+import AIAssistantCard from "@/components/patient/AIAssistantCard";
+import ExercisesCard from "@/components/patient/ExercisesCard";
+import LibraryCard from "@/components/patient/LibraryCard";
+import MoodTrackerCard from "@/components/patient/MoodTrackerCard";
+import GamificationCard from "@/components/patient/GamificationCard";
 
 const Paciente = () => {
-  const activities = [
-    { name: "Meditación matutina", completed: true, time: "10 min" },
-    { name: "Registro emocional", completed: true, time: "5 min" },
-    { name: "Ejercicio de respiración", completed: false, time: "8 min" },
-    { name: "Reflexión nocturna", completed: false, time: "15 min" },
+  const [userName] = useState("María");
+  const [streak] = useState(7);
+  const [weeklyProgress] = useState(68);
+  
+  const quickStats = [
+    { label: "Sesiones completadas", value: "12", icon: "🧘" },
+    { label: "Días consecutivos", value: streak.toString(), icon: "🔥" },
+    { label: "Minutos practicados", value: "156", icon: "⏱️" },
+    { label: "Nivel de bienestar", value: "Bien", icon: "😊" }
   ];
 
-  const weeklyProgress = 65;
+  const todayActivities = [
+    { name: "Meditación matutina", completed: true, time: "10 min", category: "Mindfulness" },
+    { name: "Registro emocional", completed: true, time: "5 min", category: "Estado de ánimo" },
+    { name: "Ejercicio de respiración", completed: false, time: "8 min", category: "Respiración" },
+    { name: "Reflexión nocturna", completed: false, time: "15 min", category: "Reflexión" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-secondary/10 p-6">
-      <div className="max-w-6xl mx-auto space-y-8">
-        {/* Header */}
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-secondary/10">
+      <div className="max-w-7xl mx-auto p-6 space-y-8">
+        {/* Header personalizado */}
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Mi Espacio Personal</h1>
-            <p className="text-muted-foreground mt-1">
-              Bienvenido de vuelta, sigamos cuidando tu bienestar
-            </p>
+          <div className="flex items-center gap-4">
+            <Avatar className="h-16 w-16 border-2 border-primary/20">
+              <AvatarImage src="/placeholder.svg" alt={userName} />
+              <AvatarFallback className="bg-gradient-primary text-primary-foreground text-xl font-semibold">
+                {userName.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">
+                ¡Bienvenida de vuelta, {userName}! 🌟
+              </h1>
+              <p className="text-muted-foreground mt-1">
+                Es genial verte aquí. Sigamos construyendo juntos tu bienestar emocional.
+              </p>
+            </div>
           </div>
-          <Badge variant="secondary" className="text-sm">
-            <Heart className="h-4 w-4 mr-1" />
-            Activo
-          </Badge>
+          <div className="flex items-center gap-3">
+            <Button variant="ghost" size="icon" className="relative">
+              <Bell className="h-5 w-5" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 text-xs">
+                2
+              </Badge>
+            </Button>
+            <Button variant="ghost" size="icon">
+              <Settings className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="bg-gradient-card shadow-soft">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Progreso Semanal</CardTitle>
-              <TrendingUp className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary">{weeklyProgress}%</div>
-              <Progress value={weeklyProgress} className="mt-2" />
-              <p className="text-xs text-muted-foreground mt-2">
-                +12% respecto a la semana pasada
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-card shadow-soft">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Días consecutivos</CardTitle>
-              <Calendar className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary">7</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                ¡Excelente racha! Sigue así
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-card shadow-soft">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Estado de ánimo</CardTitle>
-              <Heart className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-primary">Positivo</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Basado en tu registro diario
-              </p>
-            </CardContent>
-          </Card>
+        {/* Stats rápidas */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {quickStats.map((stat, index) => (
+            <Card key={index} className="bg-gradient-card shadow-soft hover:shadow-card transition-all duration-300">
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-2xl font-bold text-primary">{stat.value}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                  </div>
+                  <span className="text-2xl">{stat.icon}</span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Daily Activities */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-primary" />
-                Actividades de Hoy
-              </CardTitle>
-              <CardDescription>
-                Completa tus rutinas diarias de bienestar
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {activities.map((activity, index) => (
+        {/* Progreso semanal destacado */}
+        <Card className="bg-gradient-card shadow-card">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  Progreso de esta semana
+                </CardTitle>
+                <CardDescription>
+                  Vas muy bien, ¡sigue así! Has mejorado un 12% respecto a la semana pasada.
+                </CardDescription>
+              </div>
+              <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                +12%
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              <div className="flex justify-between text-sm">
+                <span>Completado</span>
+                <span className="font-semibold">{weeklyProgress}% de tus objetivos</span>
+              </div>
+              <Progress value={weeklyProgress} className="h-2" />
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>Lunes</span>
+                <span>Martes</span>
+                <span>Miércoles</span>
+                <span>Jueves</span>
+                <span>Viernes</span>
+                <span>Sábado</span>
+                <span>Domingo</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tarjetas principales del panel */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          {/* Asistente IA */}
+          <AIAssistantCard />
+          
+          {/* Ejercicios */}
+          <ExercisesCard />
+          
+          {/* Estado de ánimo */}
+          <MoodTrackerCard />
+          
+          {/* Biblioteca */}
+          <LibraryCard />
+        </div>
+
+        {/* Gamificación - Ancho completo */}
+        <GamificationCard />
+
+        {/* Actividades de hoy - Sección adicional */}
+        <Card className="shadow-card">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <Calendar className="h-5 w-5 text-primary" />
+                  Actividades pendientes para hoy
+                </CardTitle>
+                <CardDescription>
+                  Completa tus rutinas diarias para mantener tu progreso
+                </CardDescription>
+              </div>
+              <Button variant="outline" size="sm">
+                <User className="h-4 w-4 mr-2" />
+                Personalizar rutina
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {todayActivities.map((activity, index) => (
                 <div 
                   key={index} 
-                  className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-300 ${
+                  className={`flex items-center justify-between p-4 rounded-lg border transition-all duration-300 ${
                     activity.completed 
                       ? 'bg-primary/5 border-primary/20' 
-                      : 'bg-muted/30 border-border hover:bg-muted/50'
+                      : 'bg-muted/30 border-border hover:bg-muted/50 hover:shadow-soft'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-4 h-4 rounded-full border-2 ${
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
                       activity.completed 
-                        ? 'bg-primary border-primary' 
+                        ? 'bg-primary border-primary text-primary-foreground' 
                         : 'border-muted-foreground'
-                    }`} />
+                    }`}>
+                      {activity.completed && "✓"}
+                    </div>
                     <div>
                       <p className={`font-medium ${
                         activity.completed ? 'text-primary' : 'text-foreground'
                       }`}>
                         {activity.name}
                       </p>
-                      <p className="text-xs text-muted-foreground">{activity.time}</p>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span>{activity.time}</span>
+                        <span>•</span>
+                        <Badge variant="outline" className="text-xs">
+                          {activity.category}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
                   {!activity.completed && (
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
                       Iniciar
+                      <ChevronRight className="h-3 w-3 ml-1" />
                     </Button>
                   )}
                 </div>
               ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Acceso rápido a otras funciones */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="shadow-soft hover:shadow-card transition-all duration-300 cursor-pointer">
+            <CardContent className="p-6 text-center">
+              <Users className="h-8 w-8 text-primary mx-auto mb-3" />
+              <h4 className="font-semibold mb-2">Grupos de Apoyo</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Conéctate con otros en tu camino de bienestar
+              </p>
+              <Button variant="outline" size="sm" className="w-full">
+                Explorar grupos
+              </Button>
             </CardContent>
           </Card>
 
-          {/* Quick Actions */}
-          <Card className="shadow-card">
-            <CardHeader>
-              <CardTitle>Acciones Rápidas</CardTitle>
-              <CardDescription>
-                Herramientas y recursos disponibles
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Button 
-                className="w-full justify-start bg-gradient-primary hover:shadow-glow transition-all duration-300" 
-                size="lg"
-              >
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Iniciar sesión de chat IA
+          <Card className="shadow-soft hover:shadow-card transition-all duration-300 cursor-pointer">
+            <CardContent className="p-6 text-center">
+              <Calendar className="h-8 w-8 text-primary mx-auto mb-3" />
+              <h4 className="font-semibold mb-2">Agendar Cita</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Reserva una sesión con tu psicólogo
+              </p>
+              <Button variant="outline" size="sm" className="w-full">
+                Ver disponibilidad
               </Button>
-              
-              <Button 
-                variant="outline" 
-                className="w-full justify-start hover:bg-primary/5 transition-all duration-300" 
-                size="lg"
-              >
-                <BookOpen className="h-4 w-4 mr-2" />
-                Explorar recursos
-              </Button>
-              
-              <Button 
-                variant="outline" 
-                className="w-full justify-start hover:bg-primary/5 transition-all duration-300" 
-                size="lg"
-              >
-                <Users className="h-4 w-4 mr-2" />
-                Unirse a grupo de apoyo
-              </Button>
-              
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start text-muted-foreground hover:text-foreground transition-all duration-300" 
-                size="lg"
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Agendar cita
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-soft hover:shadow-card transition-all duration-300 cursor-pointer">
+            <CardContent className="p-6 text-center">
+              <BookOpen className="h-8 w-8 text-primary mx-auto mb-3" />
+              <h4 className="font-semibold mb-2">Centro de Recursos</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Accede a herramientas y materiales adicionales
+              </p>
+              <Button variant="outline" size="sm" className="w-full">
+                Ir a recursos
               </Button>
             </CardContent>
           </Card>
