@@ -651,39 +651,63 @@ export type Database = {
       }
       support_groups: {
         Row: {
+          capacidad_max: number | null
           city: string
-          condition_type: string
           country: string
           created_at: string
+          current_members: number | null
           description: string | null
           id: string
+          is_active: boolean | null
           meeting_type: string | null
+          moderator_ids: string[] | null
           name: string
+          owner_id: string | null
+          privacidad: string | null
           region: string
+          reglas_personalizadas: string | null
+          tematicas: string[] | null
+          ubicacion_detalle: string | null
           whatsapp_link: string | null
         }
         Insert: {
+          capacidad_max?: number | null
           city: string
-          condition_type: string
           country: string
           created_at?: string
+          current_members?: number | null
           description?: string | null
           id?: string
+          is_active?: boolean | null
           meeting_type?: string | null
+          moderator_ids?: string[] | null
           name: string
+          owner_id?: string | null
+          privacidad?: string | null
           region: string
+          reglas_personalizadas?: string | null
+          tematicas?: string[] | null
+          ubicacion_detalle?: string | null
           whatsapp_link?: string | null
         }
         Update: {
+          capacidad_max?: number | null
           city?: string
-          condition_type?: string
           country?: string
           created_at?: string
+          current_members?: number | null
           description?: string | null
           id?: string
+          is_active?: boolean | null
           meeting_type?: string | null
+          moderator_ids?: string[] | null
           name?: string
+          owner_id?: string | null
+          privacidad?: string | null
           region?: string
+          reglas_personalizadas?: string | null
+          tematicas?: string[] | null
+          ubicacion_detalle?: string | null
           whatsapp_link?: string | null
         }
         Relationships: []

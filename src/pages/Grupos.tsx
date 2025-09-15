@@ -12,6 +12,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { 
@@ -54,6 +55,7 @@ const topics = [
 ];
 
 const Grupos = () => {
+  const navigate = useNavigate();
   const [groups, setGroups] = useState([]);
   const [filteredGroups, setFilteredGroups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -154,7 +156,7 @@ const Grupos = () => {
     // Topic filter
     if (filters.topic) {
       filtered = filtered.filter(group => 
-        group.condition_type === filters.topic
+        group.tematicas && group.tematicas.includes(filters.topic)
       );
     }
 
@@ -402,145 +404,13 @@ const Grupos = () => {
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Directorio de Grupos de Apoyo</h2>
-            <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-              <DialogTrigger asChild>
-                <Button className="bg-gradient-primary hover:shadow-glow transition-all duration-300">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Crear grupo
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Crear Nuevo Grupo</DialogTitle>
-                </DialogHeader>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(handleCreateGroup)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nombre del grupo</FormLabel>
-                          <FormControl>
-                            <Input {...field} placeholder="Ej. Grupo de Apoyo para Ansiedad" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Descripción</FormLabel>
-                          <FormControl>
-                            <Textarea {...field} placeholder="Describe brevemente el grupo y sus objetivos" />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="topic"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Temática</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecciona" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {topics.map(topic => (
-                                  <SelectItem key={topic.value} value={topic.value}>
-                                    {topic.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="modality"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Modalidad</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Selecciona" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                <SelectItem value="online">Virtual</SelectItem>
-                                <SelectItem value="presencial">Presencial</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="city"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Ciudad</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Ciudad" />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={form.control}
-                        name="province"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Estado</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Estado" />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                    
-                    <FormField
-                      control={form.control}
-                      name="whatsapp_link"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Link de WhatsApp (opcional)</FormLabel>
-                          <FormControl>
-                            <Input {...field} placeholder="https://chat.whatsapp.com/..." />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <div className="flex gap-2">
-                      <Button type="button" variant="outline" onClick={() => setShowCreateDialog(false)} className="flex-1">
-                        Cancelar
-                      </Button>
-                      <Button type="submit" className="flex-1 bg-gradient-primary">
-                        Crear grupo
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </DialogContent>
-            </Dialog>
+            <Button 
+              onClick={() => navigate('/grupos/crear')}
+              className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Crear grupo
+            </Button>
           </div>
 
           {loading ? (
@@ -570,7 +440,7 @@ const Grupos = () => {
                       <div className="flex items-start justify-between">
                         <div className="space-y-2 flex-1">
                           <CardTitle className="text-lg group-hover:text-primary transition-colors flex items-center gap-2">
-                            {getTopicIcon(group.condition_type)}
+                            {getTopicIcon(group.tematicas?.[0] || 'general')}
                             {group.name}
                           </CardTitle>
                           <div className="flex items-center gap-2">
@@ -604,14 +474,23 @@ const Grupos = () => {
                         
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">Temática:</span>
-                          <Badge variant="secondary" className="capitalize">
-                            {group.condition_type}
-                          </Badge>
+                          <div className="flex flex-wrap gap-1">
+                            {group.tematicas?.slice(0, 2).map((tema, idx) => (
+                              <Badge key={idx} variant="secondary" className="capitalize text-xs">
+                                {tema}
+                              </Badge>
+                            ))}
+                            {group.tematicas && group.tematicas.length > 2 && (
+                              <Badge variant="outline" className="text-xs">
+                                +{group.tematicas.length - 2}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                         
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">Aforo:</span>
-                          <span>8/15</span>
+                          <span>{group.current_members || 1}/{group.capacidad_max || 20}</span>
                         </div>
                         
                         <div className="flex items-center justify-between">
@@ -653,7 +532,7 @@ const Grupos = () => {
                   <p className="text-muted-foreground mb-4">
                     Intenta ajustar los filtros o crear un nuevo grupo
                   </p>
-                  <Button onClick={() => setShowCreateDialog(true)} className="bg-gradient-primary">
+                  <Button onClick={() => navigate('/grupos/crear')} className="bg-gradient-primary">
                     <Plus className="h-4 w-4 mr-2" />
                     Crear el primer grupo
                   </Button>

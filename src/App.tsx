@@ -15,6 +15,7 @@ import Configuracion from "./pages/Configuracion";
 import Evaluaciones from "./pages/Evaluaciones";
 import Recursos from "./pages/Recursos";
 import Grupos from "./pages/Grupos";
+import CrearGrupo from "./pages/CrearGrupo";
 import AIChatPage from "./pages/AIChat";
 import Suscripcion from "./pages/Suscripcion";
 import NotFound from "./pages/NotFound";
@@ -41,6 +42,7 @@ const App = () => (
                   <Route path="/configuracion" element={<Configuracion />} />
                   <Route path="/recursos" element={<Recursos />} />
                   <Route path="/grupos" element={<Grupos />} />
+                  <Route path="/grupos/crear" element={<CrearGrupo />} />
                   <Route path="/evaluaciones" element={<Evaluaciones />} />
                   <Route path="/ai-chat" element={<AIChatPage />} />
                   <Route path="/suscripcion" element={<Suscripcion />} />
