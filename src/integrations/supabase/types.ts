@@ -380,6 +380,177 @@ export type Database = {
         }
         Relationships: []
       }
+      grupo_mensajes: {
+        Row: {
+          archivo_url: string | null
+          autor_id: string
+          contenido: string
+          editado: boolean
+          fecha_creacion: string
+          fecha_edicion: string | null
+          fijado: boolean
+          grupo_id: string
+          id: string
+          metadata: Json | null
+          reportado: boolean
+          respondiendo_a: string | null
+          tipo_mensaje: string
+        }
+        Insert: {
+          archivo_url?: string | null
+          autor_id: string
+          contenido: string
+          editado?: boolean
+          fecha_creacion?: string
+          fecha_edicion?: string | null
+          fijado?: boolean
+          grupo_id: string
+          id?: string
+          metadata?: Json | null
+          reportado?: boolean
+          respondiendo_a?: string | null
+          tipo_mensaje?: string
+        }
+        Update: {
+          archivo_url?: string | null
+          autor_id?: string
+          contenido?: string
+          editado?: boolean
+          fecha_creacion?: string
+          fecha_edicion?: string | null
+          fijado?: boolean
+          grupo_id?: string
+          id?: string
+          metadata?: Json | null
+          reportado?: boolean
+          respondiendo_a?: string | null
+          tipo_mensaje?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_mensajes_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "grupo_mensajes_respondiendo_a_fkey"
+            columns: ["respondiendo_a"]
+            isOneToOne: false
+            referencedRelation: "grupo_mensajes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grupo_miembros: {
+        Row: {
+          activo: boolean
+          alias: string
+          fecha_union: string
+          grupo_id: string
+          id: string
+          rol: string
+          user_id: string
+        }
+        Insert: {
+          activo?: boolean
+          alias: string
+          fecha_union?: string
+          grupo_id: string
+          id?: string
+          rol?: string
+          user_id: string
+        }
+        Update: {
+          activo?: boolean
+          alias?: string
+          fecha_union?: string
+          grupo_id?: string
+          id?: string
+          rol?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_miembros_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grupo_presencia: {
+        Row: {
+          en_linea: boolean
+          grupo_id: string
+          id: string
+          ultima_actividad: string
+          user_id: string
+        }
+        Insert: {
+          en_linea?: boolean
+          grupo_id: string
+          id?: string
+          ultima_actividad?: string
+          user_id: string
+        }
+        Update: {
+          en_linea?: boolean
+          grupo_id?: string
+          id?: string
+          ultima_actividad?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_presencia_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grupo_reportes: {
+        Row: {
+          descripcion: string | null
+          fecha_reporte: string
+          id: string
+          mensaje_id: string
+          motivo: string
+          reportado_por: string
+          resuelto: boolean
+        }
+        Insert: {
+          descripcion?: string | null
+          fecha_reporte?: string
+          id?: string
+          mensaje_id: string
+          motivo: string
+          reportado_por: string
+          resuelto?: boolean
+        }
+        Update: {
+          descripcion?: string | null
+          fecha_reporte?: string
+          id?: string
+          mensaje_id?: string
+          motivo?: string
+          reportado_por?: string
+          resuelto?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_reportes_mensaje_id_fkey"
+            columns: ["mensaje_id"]
+            isOneToOne: false
+            referencedRelation: "grupo_mensajes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mood_entries: {
         Row: {
           created_at: string
@@ -653,6 +824,7 @@ export type Database = {
         Row: {
           capacidad_max: number | null
           city: string
+          configuracion_chat: Json | null
           country: string
           created_at: string
           current_members: number | null
@@ -661,6 +833,7 @@ export type Database = {
           is_active: boolean | null
           meeting_type: string | null
           moderator_ids: string[] | null
+          modo_lento_segundos: number | null
           name: string
           owner_id: string | null
           privacidad: string | null
@@ -673,6 +846,7 @@ export type Database = {
         Insert: {
           capacidad_max?: number | null
           city: string
+          configuracion_chat?: Json | null
           country: string
           created_at?: string
           current_members?: number | null
@@ -681,6 +855,7 @@ export type Database = {
           is_active?: boolean | null
           meeting_type?: string | null
           moderator_ids?: string[] | null
+          modo_lento_segundos?: number | null
           name: string
           owner_id?: string | null
           privacidad?: string | null
@@ -693,6 +868,7 @@ export type Database = {
         Update: {
           capacidad_max?: number | null
           city?: string
+          configuracion_chat?: Json | null
           country?: string
           created_at?: string
           current_members?: number | null
@@ -701,6 +877,7 @@ export type Database = {
           is_active?: boolean | null
           meeting_type?: string | null
           moderator_ids?: string[] | null
+          modo_lento_segundos?: number | null
           name?: string
           owner_id?: string | null
           privacidad?: string | null
@@ -834,7 +1011,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_user_presence: {
+        Args: { p_en_linea?: boolean; p_grupo_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

@@ -35,6 +35,7 @@ import {
   Coffee,
   Target
 } from "lucide-react";
+import { JoinGroupDialog } from '@/components/groups/JoinGroupDialog';
 
 const topicIcons = {
   ansiedad: Brain,
@@ -212,17 +213,77 @@ const Grupos = () => {
     }
   };
 
-  const handleJoinGroup = async (groupId) => {
+  const handleJoinGroup = async (groupId: string) => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "Debe iniciar sesión para unirse a un grupo",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check if already a member
+      const { data: existingMember } = await supabase
+        .from('grupo_miembros')
+        .select('*')
+        .eq('grupo_id', groupId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (existingMember) {
+        // Already a member, navigate to chat
+        navigate(`/grupos/${groupId}`);
+        return;
+      }
+
+      // Get user's profile for default alias
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('user_id', user.id)
+        .single();
+
+      const defaultAlias = profile?.full_name?.split(' ')[0] || 'Miembro';
+
+      // Join the group
+      const { error } = await supabase
+        .from('grupo_miembros')
+        .insert({
+          grupo_id: groupId,
+          user_id: user.id,
+          alias: defaultAlias,
+          rol: 'miembro'
+        });
+
+      if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+          toast({
+            title: "Error",
+            description: "Ya eres miembro de este grupo",
+            variant: "destructive"
+          });
+        } else {
+          throw error;
+        }
+        return;
+      }
+
       toast({
         title: "¡Te has unido al grupo!",
-        description: "Pronto recibirás información sobre las próximas sesiones"
+        description: "Ahora puedes participar en las conversaciones"
       });
+
+      // Navigate to the chat
+      navigate(`/grupos/${groupId}`);
+      
     } catch (error) {
       console.error('Error joining group:', error);
       toast({
         title: "Error",
-        description: "No se pudo unir al grupo",
+        description: "No se pudo unir al grupo. Inténtalo de nuevo.",
         variant: "destructive"
       });
     }
@@ -500,15 +561,20 @@ const Grupos = () => {
                       </div>
                       
                       <div className="flex gap-2">
+                        <JoinGroupDialog group={group}>
+                          <Button 
+                            className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                          >
+                            <UserPlus className="h-4 w-4 mr-2" />
+                            Unirme
+                          </Button>
+                        </JoinGroupDialog>
                         <Button 
-                          className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
-                          onClick={() => handleJoinGroup(group.id)}
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => navigate(`/grupos/${group.id}`)}
                         >
-                          <UserPlus className="h-4 w-4 mr-2" />
-                          Unirme
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          Ver detalles
+                          Entrar al Chat
                         </Button>
                       </div>
                       
