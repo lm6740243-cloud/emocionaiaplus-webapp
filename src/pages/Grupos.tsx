@@ -36,6 +36,8 @@ import {
   Target
 } from "lucide-react";
 import { JoinGroupDialog } from '@/components/groups/JoinGroupDialog';
+import { NearbyGroups } from '@/components/groups/NearbyGroups';
+import { LocalResources } from '@/components/groups/LocalResources';
 
 const topicIcons = {
   ansiedad: Brain,
@@ -189,8 +191,9 @@ const Grupos = () => {
           meeting_type: data.modality,
           city: data.city,
           region: data.province,
-          country: 'México',
-          whatsapp_link: data.whatsapp_link
+          country: 'Ecuador',
+          whatsapp_link: data.whatsapp_link,
+          owner_id: user.id
         });
 
       if (error) throw error;
@@ -327,287 +330,318 @@ const Grupos = () => {
           </p>
         </div>
 
-        {/* Search and Filters */}
-        <Card className="bg-gradient-card shadow-soft">
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Buscar grupos por nombre o descripción..."
-                    value={filters.search}
-                    onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
-                    className="pl-10"
-                  />
+        {/* Tabs for different sections */}
+        <Tabs defaultValue="nearby" className="space-y-6">
+          <div className="flex justify-center">
+            <TabsList className="grid w-full max-w-md grid-cols-3">
+              <TabsTrigger value="nearby">Cerca de Mí</TabsTrigger>
+              <TabsTrigger value="directory">Directorio</TabsTrigger>
+              <TabsTrigger value="resources">Recursos</TabsTrigger>
+            </TabsList>
+          </div>
+
+          {/* Nearby Groups Tab */}
+          <TabsContent value="nearby">
+            <NearbyGroups 
+              userCity={userProfile?.city} 
+              userProvince={userProfile?.province} 
+            />
+          </TabsContent>
+
+          {/* Local Resources Tab */}
+          <TabsContent value="resources">
+            <LocalResources 
+              userCity={userProfile?.city} 
+              userProvince={userProfile?.province} 
+            />
+          </TabsContent>
+
+          {/* Directory Tab */}
+          <TabsContent value="directory">
+            {/* Search and Filters */}
+            <Card className="bg-gradient-card shadow-soft">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex-1 relative">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Buscar grupos por nombre o descripción..."
+                        value={filters.search}
+                        onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                        className="pl-10"
+                      />
+                    </div>
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <Filter className="h-4 w-4" />
+                      Filtros
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <Select value={filters.city} onValueChange={(value) => setFilters(prev => ({ ...prev, city: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Ciudad" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todas las ciudades</SelectItem>
+                        <SelectItem value="quito">Quito</SelectItem>
+                        <SelectItem value="guayaquil">Guayaquil</SelectItem>
+                        <SelectItem value="cuenca">Cuenca</SelectItem>
+                        <SelectItem value="ambato">Ambato</SelectItem>
+                        <SelectItem value="machala">Machala</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filters.province} onValueChange={(value) => setFilters(prev => ({ ...prev, province: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Provincia" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todas las provincias</SelectItem>
+                        <SelectItem value="pichincha">Pichincha</SelectItem>
+                        <SelectItem value="guayas">Guayas</SelectItem>
+                        <SelectItem value="azuay">Azuay</SelectItem>
+                        <SelectItem value="tungurahua">Tungurahua</SelectItem>
+                        <SelectItem value="el oro">El Oro</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filters.modality} onValueChange={(value) => setFilters(prev => ({ ...prev, modality: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Modalidad" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todas</SelectItem>
+                        <SelectItem value="online">Virtual</SelectItem>
+                        <SelectItem value="presencial">Presencial</SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filters.topic} onValueChange={(value) => setFilters(prev => ({ ...prev, topic: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Temática" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todas las temáticas</SelectItem>
+                        {topics.map(topic => (
+                          <SelectItem key={topic.value} value={topic.value}>
+                            <div className="flex items-center gap-2">
+                              <topic.icon className="h-4 w-4" />
+                              {topic.label}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <Select value={filters.schedule} onValueChange={(value) => setFilters(prev => ({ ...prev, schedule: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Horario" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="">Todos los horarios</SelectItem>
+                        <SelectItem value="morning">Mañana (9:00-12:00)</SelectItem>
+                        <SelectItem value="afternoon">Tarde (12:00-18:00)</SelectItem>
+                        <SelectItem value="evening">Noche (18:00-21:00)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <Button variant="outline" className="flex items-center gap-2">
-                  <Filter className="h-4 w-4" />
-                  Filtros
+              </CardContent>
+            </Card>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card className="bg-gradient-card shadow-soft">
+                <CardContent className="p-6 text-center">
+                  <Users className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-primary">{filteredGroups.length}</div>
+                  <p className="text-sm text-muted-foreground">Grupos disponibles</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-gradient-card shadow-soft">
+                <CardContent className="p-6 text-center">
+                  <Globe className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-primary">
+                    {filteredGroups.filter(g => g.meeting_type === 'online').length}
+                  </div>
+                  <p className="text-sm text-muted-foreground">Grupos virtuales</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-gradient-card shadow-soft">
+                <CardContent className="p-6 text-center">
+                  <MapPin className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-primary">
+                    {filteredGroups.filter(g => g.meeting_type === 'presencial').length}
+                  </div>
+                  <p className="text-sm text-muted-foreground">Grupos presenciales</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-gradient-card shadow-soft">
+                <CardContent className="p-6 text-center">
+                  <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <div className="text-2xl font-bold text-primary">
+                    {userProfile?.city ? filteredGroups.filter(g => g.city?.toLowerCase() === userProfile.city.toLowerCase()).length : 0}
+                  </div>
+                  <p className="text-sm text-muted-foreground">En tu ciudad</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Groups Directory */}
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Directorio de Grupos de Apoyo</h2>
+                <Button 
+                  onClick={() => navigate('/grupos/crear')}
+                  className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Crear grupo
                 </Button>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <Select value={filters.city} onValueChange={(value) => setFilters(prev => ({ ...prev, city: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Ciudad" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Todas las ciudades</SelectItem>
-                    <SelectItem value="mexico">Ciudad de México</SelectItem>
-                    <SelectItem value="guadalajara">Guadalajara</SelectItem>
-                    <SelectItem value="monterrey">Monterrey</SelectItem>
-                    <SelectItem value="puebla">Puebla</SelectItem>
-                    <SelectItem value="tijuana">Tijuana</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={filters.province} onValueChange={(value) => setFilters(prev => ({ ...prev, province: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Estado" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Todos los estados</SelectItem>
-                    <SelectItem value="cdmx">Ciudad de México</SelectItem>
-                    <SelectItem value="jalisco">Jalisco</SelectItem>
-                    <SelectItem value="nuevo leon">Nuevo León</SelectItem>
-                    <SelectItem value="puebla">Puebla</SelectItem>
-                    <SelectItem value="baja california">Baja California</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={filters.modality} onValueChange={(value) => setFilters(prev => ({ ...prev, modality: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Modalidad" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Todas</SelectItem>
-                    <SelectItem value="online">Virtual</SelectItem>
-                    <SelectItem value="presencial">Presencial</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={filters.topic} onValueChange={(value) => setFilters(prev => ({ ...prev, topic: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Temática" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Todas las temáticas</SelectItem>
-                    {topics.map(topic => (
-                      <SelectItem key={topic.value} value={topic.value}>
-                        <div className="flex items-center gap-2">
-                          <topic.icon className="h-4 w-4" />
-                          {topic.label}
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, i) => (
+                    <Card key={i} className="shadow-card">
+                      <CardHeader>
+                        <Skeleton className="h-6 w-3/4" />
+                        <Skeleton className="h-4 w-1/2" />
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-3">
+                          <Skeleton className="h-4 w-full" />
+                          <Skeleton className="h-4 w-2/3" />
+                          <Skeleton className="h-8 w-full" />
                         </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select value={filters.schedule} onValueChange={(value) => setFilters(prev => ({ ...prev, schedule: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Horario" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">Todos los horarios</SelectItem>
-                    <SelectItem value="morning">Mañana (9:00-12:00)</SelectItem>
-                    <SelectItem value="afternoon">Tarde (12:00-18:00)</SelectItem>
-                    <SelectItem value="evening">Noche (18:00-21:00)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-gradient-card shadow-soft">
-            <CardContent className="p-6 text-center">
-              <Users className="h-8 w-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">{filteredGroups.length}</div>
-              <p className="text-sm text-muted-foreground">Grupos disponibles</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-card shadow-soft">
-            <CardContent className="p-6 text-center">
-              <Globe className="h-8 w-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">
-                {filteredGroups.filter(g => g.meeting_type === 'online').length}
-              </div>
-              <p className="text-sm text-muted-foreground">Grupos virtuales</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-card shadow-soft">
-            <CardContent className="p-6 text-center">
-              <MapPin className="h-8 w-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">
-                {filteredGroups.filter(g => g.meeting_type === 'presencial').length}
-              </div>
-              <p className="text-sm text-muted-foreground">Grupos presenciales</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-gradient-card shadow-soft">
-            <CardContent className="p-6 text-center">
-              <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">
-                {userProfile?.city ? filteredGroups.filter(g => g.city?.toLowerCase() === userProfile.city.toLowerCase()).length : 0}
-              </div>
-              <p className="text-sm text-muted-foreground">En tu ciudad</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Directorio de Grupos de Apoyo</h2>
-            <Button 
-              onClick={() => navigate('/grupos/crear')}
-              className="bg-gradient-primary hover:shadow-glow transition-all duration-300"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Crear grupo
-            </Button>
-          </div>
-
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <Card key={i} className="shadow-card">
-                  <CardHeader>
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <Skeleton className="h-4 w-full" />
-                      <Skeleton className="h-4 w-2/3" />
-                      <Skeleton className="h-8 w-full" />
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredGroups.length > 0 ? (
-                filteredGroups.map((group) => (
-                  <Card key={group.id} className="group hover:shadow-card transition-all duration-300">
-                    <CardHeader>
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-2 flex-1">
-                          <CardTitle className="text-lg group-hover:text-primary transition-colors flex items-center gap-2">
-                            {getTopicIcon(group.tematicas?.[0] || 'general')}
-                            {group.name}
-                          </CardTitle>
-                          <div className="flex items-center gap-2">
-                            {getModalityBadge(group.meeting_type)}
-                            {userProfile?.city?.toLowerCase() === group.city?.toLowerCase() && (
-                              <Badge variant="outline" className="text-primary border-primary">
-                                Tu ciudad
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <CardDescription className="line-clamp-2">
-                        {group.description || "Grupo de apoyo especializado en crear un espacio seguro para compartir experiencias y crecer juntos."}
-                      </CardDescription>
-                      
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Modalidad:</span>
-                          <span className="capitalize">{group.meeting_type}</span>
-                        </div>
-                        
-                        {group.city && (
-                          <div className="flex items-center justify-between">
-                            <span className="text-muted-foreground">Ubicación:</span>
-                            <span>{group.city}, {group.region}</span>
-                          </div>
-                        )}
-                        
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Temática:</span>
-                          <div className="flex flex-wrap gap-1">
-                            {group.tematicas?.slice(0, 2).map((tema, idx) => (
-                              <Badge key={idx} variant="secondary" className="capitalize text-xs">
-                                {tema}
-                              </Badge>
-                            ))}
-                            {group.tematicas && group.tematicas.length > 2 && (
-                              <Badge variant="outline" className="text-xs">
-                                +{group.tematicas.length - 2}
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Aforo:</span>
-                          <span>{group.current_members || 1}/{group.capacidad_max || 20}</span>
-                        </div>
-                        
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">Próxima reunión:</span>
-                          <span className="font-medium text-primary">Próximamente</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex gap-2">
-                        <JoinGroupDialog group={group}>
-                          <Button 
-                            className="flex-1 bg-gradient-primary hover:shadow-glow transition-all duration-300"
-                          >
-                            <UserPlus className="h-4 w-4 mr-2" />
-                            Unirme
-                          </Button>
-                        </JoinGroupDialog>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => navigate(`/grupos/${group.id}`)}
-                        >
-                          Entrar al Chat
-                        </Button>
-                      </div>
-                      
-                      {group.whatsapp_link && (
-                        <Button 
-                          variant="outline" 
-                          className="w-full"
-                          onClick={() => window.open(group.whatsapp_link, '_blank')}
-                        >
-                          <MessageCircle className="h-4 w-4 mr-2" />
-                          WhatsApp
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               ) : (
-                <div className="col-span-full text-center py-12">
-                  <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No se encontraron grupos</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Intenta ajustar los filtros o crear un nuevo grupo
-                  </p>
-                  <Button onClick={() => navigate('/grupos/crear')} className="bg-gradient-primary">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Crear el primer grupo
-                  </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filteredGroups.length > 0 ? (
+                    filteredGroups.map((group) => (
+                      <Card key={group.id} className="shadow-card hover:shadow-lg transition-all duration-300 group cursor-pointer">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-start justify-between">
+                            <div className="space-y-1">
+                              <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                                {group.name}
+                              </CardTitle>
+                              <div className="flex items-center gap-2">
+                                {getModalityBadge(group.meeting_type)}
+                                {userProfile?.city && group.city?.toLowerCase() === userProfile.city.toLowerCase() && (
+                                  <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                                    <Star className="h-3 w-3 mr-1" />
+                                    Tu ciudad
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        
+                        <CardContent className="space-y-4">
+                          <CardDescription className="text-sm line-clamp-3">
+                            {group.description || "Grupo de apoyo mutuo para compartir experiencias y encontrar apoyo en un ambiente seguro."}
+                          </CardDescription>
+                          
+                          <div className="space-y-2 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="h-4 w-4" />
+                              <span>{group.city || 'Ciudad no especificada'}, {group.region || group.country}</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>{group.current_members || 0} miembros</span>
+                            </div>
+                            
+                            {group.whatsapp_link && (
+                              <div className="flex items-center gap-2">
+                                <MessageCircle className="h-4 w-4" />
+                                <span>WhatsApp disponible</span>
+                              </div>
+                            )}
+                          </div>
+                          
+                          {group.tematicas && group.tematicas.length > 0 && (
+                            <div className="flex flex-wrap gap-1">
+                              {group.tematicas.slice(0, 3).map((topic, index) => (
+                                <Badge key={index} variant="secondary" className="text-xs flex items-center gap-1">
+                                  {getTopicIcon(topic)}
+                                  {topics.find(t => t.value === topic)?.label || topic}
+                                </Badge>
+                              ))}
+                              {group.tematicas.length > 3 && (
+                                <Badge variant="outline" className="text-xs">
+                                  +{group.tematicas.length - 3}
+                                </Badge>
+                              )}
+                            </div>
+                          )}
+                          
+                          <div className="pt-2">
+                            <JoinGroupDialog
+                              group={group}
+                              onJoinSuccess={() => handleJoinGroup(group.id)}
+                            >
+                              <Button className="w-full bg-gradient-primary hover:shadow-glow transition-all duration-300">
+                                <UserPlus className="h-4 w-4 mr-2" />
+                                Unirse al grupo
+                              </Button>
+                            </JoinGroupDialog>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-full">
+                      <Card className="bg-gradient-card">
+                        <CardContent className="py-12 text-center">
+                          <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
+                          <h3 className="text-xl font-semibold mb-2">No se encontraron grupos</h3>
+                          <p className="text-muted-foreground mb-6">
+                            No hay grupos que coincidan con tus filtros de búsqueda.
+                          </p>
+                          <div className="space-y-3">
+                            <Button 
+                              variant="outline" 
+                              onClick={() => setFilters({
+                                search: '',
+                                city: '',
+                                province: '',
+                                modality: '',
+                                topic: '',
+                                schedule: ''
+                              })}
+                            >
+                              Limpiar filtros
+                            </Button>
+                            <div className="text-sm text-muted-foreground">o</div>
+                            <Button 
+                              onClick={() => navigate('/grupos/crear')}
+                              className="bg-gradient-primary hover:shadow-glow"
+                            >
+                              <Plus className="h-4 w-4 mr-2" />
+                              Crear un nuevo grupo
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          )}
-
-        </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

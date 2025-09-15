@@ -883,6 +883,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          city: string | null
           created_at: string
           email: string
           emergency_contact_name: string | null
@@ -892,11 +893,13 @@ export type Database = {
           gender: string | null
           id: string
           phone: string | null
+          province: string | null
           updated_at: string
           user_id: string
           user_type: string
         }
         Insert: {
+          city?: string | null
           created_at?: string
           email: string
           emergency_contact_name?: string | null
@@ -906,11 +909,13 @@ export type Database = {
           gender?: string | null
           id?: string
           phone?: string | null
+          province?: string | null
           updated_at?: string
           user_id: string
           user_type: string
         }
         Update: {
+          city?: string | null
           created_at?: string
           email?: string
           emergency_contact_name?: string | null
@@ -920,6 +925,7 @@ export type Database = {
           gender?: string | null
           id?: string
           phone?: string | null
+          province?: string | null
           updated_at?: string
           user_id?: string
           user_type?: string
@@ -989,6 +995,69 @@ export type Database = {
           pais?: string
           telefono?: string
           tipo?: string
+        }
+        Relationships: []
+      }
+      recursos_locales: {
+        Row: {
+          activo: boolean
+          ciudad: string
+          costo: string | null
+          created_at: string
+          descripcion: string | null
+          direccion: string | null
+          email: string | null
+          horarios: string | null
+          id: string
+          nombre: string
+          poblacion_objetivo: string[] | null
+          provincia: string
+          servicios: string[] | null
+          sitio_web: string | null
+          telefono: string | null
+          tipo: string
+          updated_at: string
+          verificado: boolean
+        }
+        Insert: {
+          activo?: boolean
+          ciudad: string
+          costo?: string | null
+          created_at?: string
+          descripcion?: string | null
+          direccion?: string | null
+          email?: string | null
+          horarios?: string | null
+          id?: string
+          nombre: string
+          poblacion_objetivo?: string[] | null
+          provincia: string
+          servicios?: string[] | null
+          sitio_web?: string | null
+          telefono?: string | null
+          tipo: string
+          updated_at?: string
+          verificado?: boolean
+        }
+        Update: {
+          activo?: boolean
+          ciudad?: string
+          costo?: string | null
+          created_at?: string
+          descripcion?: string | null
+          direccion?: string | null
+          email?: string | null
+          horarios?: string | null
+          id?: string
+          nombre?: string
+          poblacion_objetivo?: string[] | null
+          provincia?: string
+          servicios?: string[] | null
+          sitio_web?: string | null
+          telefono?: string | null
+          tipo?: string
+          updated_at?: string
+          verificado?: boolean
         }
         Relationships: []
       }
@@ -1301,6 +1370,25 @@ export type Database = {
         }
         Returns: boolean
       }
+      get_local_resources: {
+        Args: { p_user_city: string; p_user_province: string }
+        Returns: {
+          costo: string
+          descripcion: string
+          direccion: string
+          distance_score: number
+          email: string
+          horarios: string
+          id: string
+          is_local: boolean
+          nombre: string
+          poblacion_objetivo: string[]
+          servicios: string[]
+          sitio_web: string
+          telefono: string
+          tipo: string
+        }[]
+      }
       get_meeting_with_attendance: {
         Args: { p_meeting_id: string; p_user_id: string }
         Returns: {
@@ -1318,6 +1406,23 @@ export type Database = {
           total_asistentes: number
           ubicacion_presencial: string
           user_registered: boolean
+        }[]
+      }
+      get_nearby_groups: {
+        Args: { p_user_city: string; p_user_province: string }
+        Returns: {
+          capacidad_max: number
+          city: string
+          country: string
+          created_at: string
+          current_members: number
+          description: string
+          distance_score: number
+          id: string
+          is_local: boolean
+          meeting_type: string
+          name: string
+          region: string
         }[]
       }
       moderate_member: {
