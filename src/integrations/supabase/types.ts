@@ -434,12 +434,105 @@ export type Database = {
         }
         Relationships: []
       }
+      grupo_eventos: {
+        Row: {
+          creado_por: string
+          created_at: string
+          cupo_max: number | null
+          descripcion: string | null
+          duracion_min: number | null
+          enlace_virtual: string | null
+          fecha_hora: string
+          grupo_id: string
+          id: string
+          modalidad: string
+          titulo: string
+          ubicacion_presencial: string | null
+          updated_at: string
+        }
+        Insert: {
+          creado_por: string
+          created_at?: string
+          cupo_max?: number | null
+          descripcion?: string | null
+          duracion_min?: number | null
+          enlace_virtual?: string | null
+          fecha_hora: string
+          grupo_id: string
+          id?: string
+          modalidad: string
+          titulo: string
+          ubicacion_presencial?: string | null
+          updated_at?: string
+        }
+        Update: {
+          creado_por?: string
+          created_at?: string
+          cupo_max?: number | null
+          descripcion?: string | null
+          duracion_min?: number | null
+          enlace_virtual?: string | null
+          fecha_hora?: string
+          grupo_id?: string
+          id?: string
+          modalidad?: string
+          titulo?: string
+          ubicacion_presencial?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_eventos_grupo_id_fkey"
+            columns: ["grupo_id"]
+            isOneToOne: false
+            referencedRelation: "support_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      grupo_eventos_asistentes: {
+        Row: {
+          confirmado: boolean | null
+          creado_en: string
+          evento_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          confirmado?: boolean | null
+          creado_en?: string
+          evento_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          confirmado?: boolean | null
+          creado_en?: string
+          evento_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grupo_eventos_asistentes_evento_id_fkey"
+            columns: ["evento_id"]
+            isOneToOne: false
+            referencedRelation: "grupo_eventos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       grupo_mensajes: {
         Row: {
+          adjunto_url: string | null
           archivo_url: string | null
           autor_id: string
           contenido: string
+          creado_en: string | null
+          crisis_nivel: string | null
           editado: boolean
+          es_fijado: boolean | null
+          es_flaggeado: boolean | null
           fecha_creacion: string
           fecha_edicion: string | null
           fijado: boolean
@@ -451,10 +544,15 @@ export type Database = {
           tipo_mensaje: string
         }
         Insert: {
+          adjunto_url?: string | null
           archivo_url?: string | null
           autor_id: string
           contenido: string
+          creado_en?: string | null
+          crisis_nivel?: string | null
           editado?: boolean
+          es_fijado?: boolean | null
+          es_flaggeado?: boolean | null
           fecha_creacion?: string
           fecha_edicion?: string | null
           fijado?: boolean
@@ -466,10 +564,15 @@ export type Database = {
           tipo_mensaje?: string
         }
         Update: {
+          adjunto_url?: string | null
           archivo_url?: string | null
           autor_id?: string
           contenido?: string
+          creado_en?: string | null
+          crisis_nivel?: string | null
           editado?: boolean
+          es_fijado?: boolean | null
+          es_flaggeado?: boolean | null
           fecha_creacion?: string
           fecha_edicion?: string | null
           fijado?: boolean
@@ -499,9 +602,12 @@ export type Database = {
       }
       grupo_miembros: {
         Row: {
+          acepta_codigo_conducta: boolean | null
           activo: boolean
           alias: string
           baneado: boolean | null
+          creado_en: string | null
+          estado: string | null
           fecha_ban: string | null
           fecha_union: string
           grupo_id: string
@@ -513,9 +619,12 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          acepta_codigo_conducta?: boolean | null
           activo?: boolean
           alias: string
           baneado?: boolean | null
+          creado_en?: string | null
+          estado?: string | null
           fecha_ban?: string | null
           fecha_union?: string
           grupo_id: string
@@ -527,9 +636,12 @@ export type Database = {
           user_id: string
         }
         Update: {
+          acepta_codigo_conducta?: boolean | null
           activo?: boolean
           alias?: string
           baneado?: boolean | null
+          creado_en?: string | null
+          estado?: string | null
           fecha_ban?: string | null
           fecha_union?: string
           grupo_id?: string
@@ -584,7 +696,9 @@ export type Database = {
       }
       grupo_reportes: {
         Row: {
+          creado_en: string | null
           descripcion: string | null
+          estado: string | null
           fecha_reporte: string
           id: string
           mensaje_id: string
@@ -593,7 +707,9 @@ export type Database = {
           resuelto: boolean
         }
         Insert: {
+          creado_en?: string | null
           descripcion?: string | null
+          estado?: string | null
           fecha_reporte?: string
           id?: string
           mensaje_id: string
@@ -602,7 +718,9 @@ export type Database = {
           resuelto?: boolean
         }
         Update: {
+          creado_en?: string | null
           descripcion?: string | null
+          estado?: string | null
           fecha_reporte?: string
           id?: string
           mensaje_id?: string
@@ -1248,6 +1366,7 @@ export type Database = {
           city: string
           configuracion_chat: Json | null
           country: string
+          creado_en: string | null
           created_at: string
           current_members: number | null
           description: string | null
@@ -1270,6 +1389,7 @@ export type Database = {
           city: string
           configuracion_chat?: Json | null
           country: string
+          creado_en?: string | null
           created_at?: string
           current_members?: number | null
           description?: string | null
@@ -1292,6 +1412,7 @@ export type Database = {
           city?: string
           configuracion_chat?: Json | null
           country?: string
+          creado_en?: string | null
           created_at?: string
           current_members?: number | null
           description?: string | null
