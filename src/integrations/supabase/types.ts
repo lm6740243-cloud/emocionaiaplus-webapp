@@ -753,6 +753,78 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_preferences: {
+        Row: {
+          created_at: string
+          email_enabled: boolean
+          grupo_id: string | null
+          id: string
+          in_app_enabled: boolean
+          tipo_notificacion: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_enabled?: boolean
+          grupo_id?: string | null
+          id?: string
+          in_app_enabled?: boolean
+          tipo_notificacion: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_enabled?: boolean
+          grupo_id?: string | null
+          id?: string
+          in_app_enabled?: boolean
+          tipo_notificacion?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          grupo_id: string | null
+          id: string
+          leida: boolean
+          mensaje: string
+          metadata: Json | null
+          tipo: string
+          titulo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          grupo_id?: string | null
+          id?: string
+          leida?: boolean
+          mensaje: string
+          metadata?: Json | null
+          tipo: string
+          titulo: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          grupo_id?: string | null
+          id?: string
+          leida?: boolean
+          mensaje?: string
+          metadata?: Json | null
+          tipo?: string
+          titulo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       patient_resources: {
         Row: {
           assigned_at: string

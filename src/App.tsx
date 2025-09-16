@@ -19,6 +19,7 @@ import CrearGrupo from "./pages/CrearGrupo";
 import GrupoChat from "./pages/GrupoChat";
 import AIChatPage from "./pages/AIChat";
 import Suscripcion from "./pages/Suscripcion";
+import NotificationSettings from "./pages/NotificationSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
                   <Route path="/paciente" element={<Paciente />} />
                   <Route path="/psicologo" element={<Psicologo />} />
                   <Route path="/configuracion" element={<Configuracion />} />
+                  <Route path="/configuracion/notificaciones" element={<NotificationSettings />} />
                   <Route path="/recursos" element={<Recursos />} />
                   <Route path="/grupos" element={<Grupos />} />
                   <Route path="/grupos/crear" element={<CrearGrupo />} />

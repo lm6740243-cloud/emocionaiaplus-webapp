@@ -18,6 +18,7 @@ import {
   BarChart3,
   Crown
 } from 'lucide-react';
+import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 import { useState } from 'react';
 
 const Navigation = () => {
@@ -80,6 +81,11 @@ const Navigation = () => {
             <Badge variant="secondary" className="text-xs">
               Plataforma de Bienestar
             </Badge>
+          </div>
+
+          {/* Notification Center */}
+          <div className="flex justify-center">
+            <NotificationCenter />
           </div>
 
           {/* Navigation Menu */}
