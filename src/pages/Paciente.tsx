@@ -9,6 +9,7 @@ import { Heart, Calendar, TrendingUp, BookOpen, Users, MessageCircle, Bell, Sett
 import AIAssistantCard from "@/components/patient/AIAssistantCard";
 import ExercisesCard from "@/components/patient/ExercisesCard";
 import MoodTrackerCard from "@/components/patient/MoodTrackerCard";
+import CircularMoodTracker from "@/components/patient/CircularMoodTracker";
 import LibraryCard from "@/components/patient/LibraryCard";
 import GamificationCard from "@/components/patient/GamificationCard";
 import { ExternalDataDashboard } from "@/components/integrations/ExternalDataDashboard";
@@ -124,6 +125,9 @@ const Paciente = () => {
         {/* External Data Integration Section */}
         <ExternalDataDashboard />
 
+        {/* Mood Tracker Circular - Destacado */}
+        <CircularMoodTracker />
+
         {/* Tarjetas principales del panel */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Asistente IA */}
@@ -132,7 +136,7 @@ const Paciente = () => {
           {/* Ejercicios */}
           <ExercisesCard />
           
-          {/* Estado de ánimo */}
+          {/* Estado de ánimo detallado */}
           <MoodTrackerCard />
           
           {/* Biblioteca */}
