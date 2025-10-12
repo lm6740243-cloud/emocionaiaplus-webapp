@@ -320,6 +320,33 @@ export type Database = {
         }
         Relationships: []
       }
+      data_access_log: {
+        Row: {
+          accessed_at: string | null
+          action: string
+          id: string
+          record_id: string
+          table_name: string
+          user_id: string
+        }
+        Insert: {
+          accessed_at?: string | null
+          action: string
+          id?: string
+          record_id: string
+          table_name: string
+          user_id: string
+        }
+        Update: {
+          accessed_at?: string | null
+          action?: string
+          id?: string
+          record_id?: string
+          table_name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       emergency_alerts: {
         Row: {
           alert_time: string
@@ -1152,6 +1179,30 @@ export type Database = {
         }
         Relationships: []
       }
+      rate_limits: {
+        Row: {
+          action_type: string
+          count: number | null
+          id: string
+          user_id: string
+          window_start: string | null
+        }
+        Insert: {
+          action_type: string
+          count?: number | null
+          id?: string
+          user_id: string
+          window_start?: string | null
+        }
+        Update: {
+          action_type?: string
+          count?: number | null
+          id?: string
+          user_id?: string
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       recursos_emergencia: {
         Row: {
           activo: boolean
@@ -1471,6 +1522,33 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          expires_at: string | null
+          granted_at: string
+          granted_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          expires_at?: string | null
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          expires_at?: string | null
+          granted_at?: string
+          granted_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       wellness_recommendations: {
         Row: {
           created_at: string
@@ -1618,6 +1696,13 @@ export type Database = {
           region: string
         }[]
       }
+      has_role: {
+        Args: {
+          p_role: Database["public"]["Enums"]["app_role"]
+          p_user_id: string
+        }
+        Returns: boolean
+      }
       moderate_member: {
         Args: {
           p_action: string
@@ -1638,7 +1723,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "psychologist" | "patient" | "support"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1765,6 +1850,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "psychologist", "patient", "support"],
+    },
   },
 } as const
