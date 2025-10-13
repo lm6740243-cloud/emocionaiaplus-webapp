@@ -1,0 +1,80 @@
+MIT License
+
+Copyright (c) 2025 EmocionalIA+
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+DISCLAIMER FOR MENTAL HEALTH APPLICATION
+
+EmocionalIA+ is a complementary support tool and does NOT replace professional 
+mental health treatment, diagnosis, or therapy. This software is provided for 
+informational and supportive purposes only.
+
+IMPORTANT NOTICES:
+
+1. NOT A SUBSTITUTE FOR PROFESSIONAL CARE
+   This application does not provide medical advice, diagnosis, or treatment. 
+   Always seek the advice of qualified health providers with any questions 
+   regarding mental health conditions.
+
+2. EMERGENCY SITUATIONS
+   If you are experiencing a mental health emergency or crisis, contact 
+   emergency services immediately:
+   - Ecuador: ECU 911 or Mental Health MSP: 171
+   - International: Contact local emergency services
+
+3. AI LIMITATIONS
+   The AI assistant uses OpenAI technology but is not a licensed therapist. 
+   Responses are generated automatically and may not be appropriate for all 
+   situations. Crisis detection is automated but not infallible.
+
+4. DATA PRIVACY
+   While we implement security measures including encryption and GDPR 
+   compliance, users should be aware that no system is 100% secure. Sensitive 
+   personal health information is collected and stored.
+
+5. NO FINANCIAL ADVICE
+   Any premium features or subscriptions are for enhanced app functionality 
+   only and do not constitute financial or investment advice.
+
+6. REGULATORY COMPLIANCE
+   This application is not regulated by health authorities. Users in 
+   jurisdictions requiring specific certifications (e.g., HIPAA in USA) 
+   should consult legal counsel before use in clinical settings.
+
+7. CHILDREN AND MINORS
+   This application is intended for users 18 years and older. Use by minors 
+   requires parental/guardian consent and supervision.
+
+8. THIRD-PARTY SERVICES
+   The application integrates with third-party services (OpenAI, Stripe, 
+   Twilio) which have their own terms and privacy policies. We are not 
+   responsible for their services or data handling.
+
+THE AUTHORS AND COPYRIGHT HOLDERS DISCLAIM ALL LIABILITY FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING 
+FROM THE USE OF THIS SOFTWARE, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, 
+MEDICAL EMERGENCIES, OR ADVERSE MENTAL HEALTH OUTCOMES.
+
+BY USING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS DISCLAIMER 
+AND AGREE TO ITS TERMS.
+
+Last Updated: January 15, 2025
