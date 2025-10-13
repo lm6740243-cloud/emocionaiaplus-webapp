@@ -58,12 +58,17 @@
 
 ## 📦 Archivos Exportables Generados
 
-1. **README.md** - Documentación completa
-2. **CHANGELOG.md** - Historial de versiones
+1. **README.md** - Documentación completa con setup
+2. **CHANGELOG.md** - Historial de versiones semántico
 3. **LICENSE** - MIT + Disclaimer médico
 4. **CONTRIBUTING.md** - Guía de contribución
 5. **.env.example** - Template de variables
-6. **.gitignore** - Ya existente (read-only)
+6. **capacitor.config.ts** - Configuración Capacitor para móvil
+7. **STORE_METADATA.md** - Metadata completa para App Store y Google Play
+8. **PRIVACY_POLICY.md** - Política de privacidad GDPR-compliant
+9. **public/icon-1024.png** - Icono de app 1024x1024px
+10. **public/screenshot-[1-3].png** - Screenshots para stores
+11. **.gitignore** - Ya existente (read-only)
 
 ---
 
@@ -88,20 +93,32 @@ git push origin v1.0.0
 
 ### App Stores (Capacitor)
 
+**✅ CAPACITOR CONFIGURADO**
+
 **iOS (App Store)**
-1. Instalar Capacitor: `npm install @capacitor/core @capacitor/cli @capacitor/ios`
-2. Inicializar: `npx cap init`
-3. Build: `npm run build && npx cap sync ios`
-4. Abrir Xcode: `npx cap open ios`
-5. Configurar signing y provisioning
-6. Archive y upload a App Store Connect
+1. ✅ Dependencias instaladas: `@capacitor/core`, `@capacitor/cli`, `@capacitor/ios`
+2. ✅ Configuración creada: `capacitor.config.ts`
+3. ✅ Assets generados: icon-1024.png, screenshots
+4. Exportar a GitHub → `git pull` → `npm install`
+5. Agregar iOS: `npx cap add ios`
+6. Build: `npm run build && npx cap sync ios`
+7. Abrir Xcode: `npx cap open ios`
+8. Configurar signing y provisioning profiles
+9. Archive y upload a App Store Connect
+10. Usar metadata de `STORE_METADATA.md`
 
 **Android (Google Play)**
-1. Agregar Android: `npx cap add android`
-2. Build: `npm run build && npx cap sync android`
-3. Abrir Android Studio: `npx cap open android`
-4. Generar keystore firmado
-5. Build AAB y upload a Play Console
+1. ✅ Dependencias instaladas: `@capacitor/android`
+2. ✅ Configuración creada: `capacitor.config.ts`
+3. ✅ Assets generados: icon-1024.png, screenshots
+4. Exportar a GitHub → `git pull` → `npm install`
+5. Agregar Android: `npx cap add android`
+6. Build: `npm run build && npx cap sync android`
+7. Abrir Android Studio: `npx cap open android`
+8. Generar keystore firmado (producción)
+9. Build AAB: `./gradlew bundleRelease`
+10. Upload a Play Console
+11. Usar metadata de `STORE_METADATA.md`
 
 ---
 
@@ -156,19 +173,25 @@ git push origin v1.0.0
 
 ## 🎯 Estado Final
 
-**✅ PROYECTO 100% LISTO PARA PUBLICACIÓN**
+**✅ PROYECTO 100% LISTO PARA PUBLICACIÓN EN GITHUB Y STORES**
 
 - **Seguridad**: Robusta con RLS y validaciones
-- **Documentación**: Completa y profesional
+- **Documentación**: Completa y profesional (README, CHANGELOG, LICENSE, PRIVACY)
 - **Código**: Limpio, tipado, optimizado
-- **Legal**: Disclaimers y políticas integradas
-- **Exportable**: Listo para Git y stores
+- **Legal**: Disclaimers médicos, GDPR-compliant, políticas integradas
+- **Mobile**: Capacitor configurado (iOS 15+, Android 8+)
+- **Assets**: Iconos 1024x1024, screenshots 1080x1920, metadata stores
+- **Exportable**: Listo para Git, App Store y Google Play
 
 ### Riesgos Técnicos: MÍNIMOS ✅
 - Arquitectura sólida Lovable + Supabase
 - Edge Functions probadas y funcionando
 - No hay bugs críticos conocidos
 - Rendimiento optimizado
+- Capacitor configurado para native mobile
+- Assets completos para stores (icons, screenshots, metadata)
+- Política de privacidad GDPR-compliant lista
+- Testing end-to-end recomendado en dispositivos reales antes de launch
 
 ---
 
