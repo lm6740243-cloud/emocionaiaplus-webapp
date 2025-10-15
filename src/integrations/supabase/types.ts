@@ -320,6 +320,51 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_challenges: {
+        Row: {
+          challenge_type: string
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          description: string
+          difficulty: string
+          expires_at: string
+          id: string
+          metadata: Json | null
+          points: number
+          title: string
+          user_id: string
+        }
+        Insert: {
+          challenge_type: string
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description: string
+          difficulty?: string
+          expires_at: string
+          id?: string
+          metadata?: Json | null
+          points?: number
+          title: string
+          user_id: string
+        }
+        Update: {
+          challenge_type?: string
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          description?: string
+          difficulty?: string
+          expires_at?: string
+          id?: string
+          metadata?: Json | null
+          points?: number
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       data_access_log: {
         Row: {
           accessed_at: string | null
@@ -1411,6 +1456,36 @@ export type Database = {
           },
         ]
       }
+      reward_redemptions: {
+        Row: {
+          id: string
+          metadata: Json | null
+          points_cost: number
+          redeemed_at: string
+          reward_type: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          metadata?: Json | null
+          points_cost: number
+          redeemed_at?: string
+          reward_type: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          metadata?: Json | null
+          points_cost?: number
+          redeemed_at?: string
+          reward_type?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       support_groups: {
         Row: {
           capacidad_max: number | null
@@ -1522,6 +1597,63 @@ export type Database = {
         }
         Relationships: []
       }
+      user_achievements: {
+        Row: {
+          achievement_key: string
+          id: string
+          metadata: Json | null
+          progress: number | null
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          achievement_key: string
+          id?: string
+          metadata?: Json | null
+          progress?: number | null
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          achievement_key?: string
+          id?: string
+          metadata?: Json | null
+          progress?: number | null
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_points: {
+        Row: {
+          available_points: number
+          created_at: string
+          id: string
+          level: number
+          total_points: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          available_points?: number
+          created_at?: string
+          id?: string
+          level?: number
+          total_points?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          available_points?: number
+          created_at?: string
+          id?: string
+          level?: number
+          total_points?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           expires_at: string | null
@@ -1584,6 +1716,39 @@ export type Database = {
           recommendation_type?: string
           title?: string
           trigger_data?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wellness_routes: {
+        Row: {
+          active: boolean
+          completed_at: string | null
+          completed_steps: Json
+          id: string
+          progress: number
+          route_type: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          completed_at?: string | null
+          completed_steps?: Json
+          id?: string
+          progress?: number
+          route_type: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          completed_at?: string | null
+          completed_steps?: Json
+          id?: string
+          progress?: number
+          route_type?: string
+          started_at?: string
           user_id?: string
         }
         Relationships: []

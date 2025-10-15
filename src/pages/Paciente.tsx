@@ -13,6 +13,8 @@ import CircularMoodTracker from "@/components/patient/CircularMoodTracker";
 import LibraryCard from "@/components/patient/LibraryCard";
 import GamificationCard from "@/components/patient/GamificationCard";
 import { ExternalDataDashboard } from "@/components/integrations/ExternalDataDashboard";
+import { DailyChallenges } from "@/components/gamification/DailyChallenges";
+import { RewardsPanel } from "@/components/gamification/RewardsPanel";
 
 const Paciente = () => {
   const [userName] = useState("María");
@@ -121,6 +123,12 @@ const Paciente = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Desafíos Diarios y Recompensas */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          <DailyChallenges />
+          <RewardsPanel />
+        </div>
 
         {/* External Data Integration Section */}
         <ExternalDataDashboard />

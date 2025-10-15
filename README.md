@@ -8,6 +8,23 @@ EmocionalIA+ conecta a usuarios con profesionales de salud mental, proporciona r
 [![Built with Lovable](https://img.shields.io/badge/Built%20with-Lovable-ff69b4)](https://lovable.dev)
 [![Powered by Supabase](https://img.shields.io/badge/Powered%20by-Supabase-3ECF8E)](https://supabase.com)
 
+## 🎮 Sistema de Gamificación con Wearables
+
+### 🆕 Nuevas Funcionalidades de Salud Mental Gamificada
+- **Desafíos Diarios Personalizados**: 3 desafíos únicos cada día en 7 categorías (respiración, meditación, ejercicio, sueño, mindfulness, gratitud, registro emocional)
+- **Sistema de Puntos y Niveles**: Gana 10-15 puntos por desafío completado y sube de nivel cada 100 puntos
+- **Recompensas Canjeables**: Canjea puntos por sesiones de terapia virtual (500-900 pts) y contenido premium (250-450 pts)
+- **Integración con Wearables**: Conecta Apple Health, Google Fit o Fitbit para tracking automático de pasos, ritmo cardíaco y sueño
+- **Rutas de Bienestar Personalizadas**: 4 programas guiados (Ansiedad, Autoestima, Mindfulness, Anti-Estrés) con seguimiento de progreso
+- **Logros e Insignias**: 5 logros desbloqueables y 4 niveles de insignias para motivar el progreso continuo
+
+### Datos Rastreados de Wearables
+- **Pasos diarios**: Meta de 10,000 pasos con progreso visual
+- **Ritmo cardíaco**: Clasificación en tiempo real (bajo/normal/elevado)
+- **Calidad del sueño**: Análisis de 6-9 horas óptimas
+- **Actividad física**: Correlación automática con desafíos
+- **Tendencias de salud**: Análisis predictivo de patrones
+
 ## 🌟 Características Principales
 
 ### Para Usuarios (Pacientes)
@@ -16,7 +33,7 @@ EmocionalIA+ conecta a usuarios con profesionales de salud mental, proporciona r
 - **Grupos de Apoyo**: Comunidades anónimas moderadas con reuniones virtuales y presenciales
 - **Recursos Educativos**: Biblioteca de artículos, ejercicios de respiración y técnicas de mindfulness
 - **Conexión con Profesionales**: Sistema de citas con psicólogos certificados
-- **Gamificación**: Sistema de logros y progreso para mantener la motivación
+- **Sistema de Gamificación Completo**: Desafíos, puntos, recompensas, rutas de bienestar y logros
 
 ### Para Psicólogos
 - **Panel de Gestión de Pacientes**: Vista completa del historial y progreso
@@ -26,11 +43,42 @@ EmocionalIA+ conecta a usuarios con profesionales de salud mental, proporciona r
 - **Alertas de Riesgo**: Notificaciones automáticas ante situaciones de crisis
 
 ### Seguridad y Privacidad
-- **Cumplimiento GDPR**: Gestión de consentimientos y transparencia de datos
-- **Cifrado End-to-End**: Protección de conversaciones sensibles
+- **Cumplimiento GDPR/HIPAA**: Gestión de consentimientos, transparencia de datos y cifrado de datos biométricos
+- **Cifrado End-to-End**: Protección de conversaciones sensibles y datos de salud
 - **Anonimato en Grupos**: Participación en comunidades con alias
 - **Detección de Crisis**: Sistema automático con palabras clave configurables
 - **Recursos de Emergencia**: Líneas de ayuda disponibles 24/7
+- **Row-Level Security**: Acceso restringido a datos personales mediante políticas RLS de Supabase
+
+## 💰 Modelo de Monetización
+
+### Plan Gratuito
+- ✅ 3 desafíos diarios
+- ✅ Funcionalidades básicas de tracking
+- ✅ Acceso a recursos educativos básicos
+- ✅ Comunidad de apoyo
+- ✅ Chatbot de IA básico
+- ✅ Conexión demo con wearables
+
+### Plan Premium ($7.99/mes)
+- ⭐ Desafíos ilimitados personalizados con IA
+- ⭐ Análisis avanzado de datos de wearables
+- ⭐ Contenido premium exclusivo (guías, meditaciones)
+- ⭐ Sesiones de terapia virtual con 20% descuento
+- ⭐ Sin anuncios
+- ⭐ Soporte prioritario
+- ⭐ Acceso anticipado a nuevas funcionalidades
+- ⭐ Dashboard de análisis predictivo
+
+### Sistema de Puntos (In-App Purchases)
+Los usuarios pueden canjear puntos acumulados por:
+- 🎯 Sesión de Terapia Virtual 30min (500 puntos)
+- 🎯 Sesión de Terapia Virtual 60min (900 puntos)
+- 📚 Guía Avanzada de Mindfulness (250 puntos)
+- 🎧 Pack de 10 Meditaciones Premium (350 puntos)
+- 🏆 Taller Grupal de Bienestar (450 puntos)
+
+**Nota**: Los usuarios pueden ganar 10-15 puntos por desafío completado o comprar paquetes de puntos
 
 ## 🏗️ Arquitectura
 
