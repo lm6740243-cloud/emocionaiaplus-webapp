@@ -72,6 +72,8 @@ export const CryptoPayment = ({ amount, description, onSuccess }: CryptoPaymentP
         abi: USDC_ABI,
         functionName: 'transfer',
         args: [recipientAddress, parseUnits(amount.toString(), 6)],
+        account: address,
+        chain,
       });
     } catch (error) {
       console.error('Payment error:', error);

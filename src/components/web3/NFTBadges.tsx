@@ -40,14 +40,17 @@ export const NFTBadges = () => {
       if (error) throw error;
 
       // Map achievements to NFT badges
-      const nftBadges: NFTBadge[] = (data || []).map((achievement) => ({
-        id: achievement.id,
-        name: achievement.achievement_type,
-        description: `Logro obtenido: ${achievement.achievement_type}`,
-        imageUrl: `/badges/${achievement.achievement_type}.png`,
-        tokenId: achievement.metadata?.tokenId,
-        mintedAt: achievement.metadata?.mintedAt,
-      }));
+      const nftBadges: NFTBadge[] = (data || []).map((achievement) => {
+        const metadata = achievement.metadata as { tokenId?: string; mintedAt?: string } | null;
+        return {
+          id: achievement.id,
+          name: achievement.achievement_key,
+          description: `Logro obtenido: ${achievement.achievement_key}`,
+          imageUrl: `/badges/${achievement.achievement_key}.png`,
+          tokenId: metadata?.tokenId,
+          mintedAt: metadata?.mintedAt,
+        };
+      });
 
       setBadges(nftBadges);
     } catch (error) {

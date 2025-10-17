@@ -95,7 +95,7 @@ export const WalletConnect = () => {
                             {account.displayName}
                           </button>
                         </div>
-                        {chain.testnet && (
+                        {(chain.id === 11155111 || chain.id === 80001) && (
                           <span className="text-xs text-muted-foreground">
                             Red de prueba activa
                           </span>

@@ -1,4 +1,4 @@
-import { Navigation } from "@/components/Navigation";
+import Navigation from "@/components/Navigation";
 import { WalletConnect } from "@/components/web3/WalletConnect";
 import { CryptoPayment } from "@/components/web3/CryptoPayment";
 import { NFTBadges } from "@/components/web3/NFTBadges";
