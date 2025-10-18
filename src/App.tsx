@@ -20,6 +20,7 @@ import GrupoChat from "./pages/GrupoChat";
 import AIChatPage from "./pages/AIChat";
 import Suscripcion from "./pages/Suscripcion";
 import NotificationSettings from "./pages/NotificationSettings";
+import Web3Dashboard from "./pages/Web3Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -50,6 +51,7 @@ const App = () => (
                   <Route path="/evaluaciones" element={<Evaluaciones />} />
                   <Route path="/ai-chat" element={<AIChatPage />} />
                   <Route path="/suscripcion" element={<Suscripcion />} />
+                  <Route path="/web3" element={<Web3Dashboard />} />
                   <Route path="/subscription-success" element={<div className="flex items-center justify-center min-h-screen"><div className="text-center"><h1 className="text-2xl font-bold text-green-600 mb-4">¡Suscripción Exitosa!</h1><p className="text-muted-foreground mb-4">Gracias por suscribirte a EmocionalIA+</p><button onClick={() => window.location.href = '/'} className="bg-primary text-primary-foreground px-4 py-2 rounded">Ir al Inicio</button></div></div>} />
                   <Route path="/subscription-canceled" element={<div className="flex items-center justify-center min-h-screen"><div className="text-center"><h1 className="text-2xl font-bold text-muted-foreground mb-4">Suscripción Cancelada</h1><p className="text-muted-foreground mb-4">Puedes intentar nuevamente cuando gustes</p><button onClick={() => window.location.href = '/suscripcion'} className="bg-primary text-primary-foreground px-4 py-2 rounded">Ver Planes</button></div></div>} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
