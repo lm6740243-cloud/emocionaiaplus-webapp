@@ -1,0 +1,241 @@
+🧠 INVITACIÓN BETA TESTING - EMOCIONALIA+ 🧠
+
+¡Hola! 👋
+
+Te invitamos a ser parte del equipo de beta testers de EmocionalIA+, una app revolucionaria de salud mental con inteligencia artificial diseñada para Ecuador y Latinoamérica.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 ¿QUÉ ES EMOCIONALIA+?
+
+EmocionalIA+ es tu compañero digital de salud mental que combina:
+✅ Inteligencia artificial emocional para apoyo 24/7
+✅ Mood tracker visual intuitivo
+✅ Grupos de apoyo seguros y moderados
+✅ Recursos educativos de calidad
+✅ Conexión con psicólogos profesionales
+✅ Evaluaciones clínicas (PHQ-9, GAD-7)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📱 CÓMO INSTALAR LA APP
+
+OPCIÓN A - IOS (iPhone/iPad):
+1. Descarga TestFlight desde App Store (gratis)
+   Link: https://apps.apple.com/app/testflight/id899247664
+2. Abre este link en tu dispositivo: [LINK TESTFLIGHT]
+3. Acepta la invitación e instala EmocionalIA+
+4. ¡Listo! Abre la app y comienza
+
+OPCIÓN B - ANDROID:
+1. Abre este link en tu dispositivo: [LINK GOOGLE PLAY TESTING]
+2. Acepta unirte al programa beta
+3. Instala EmocionalIA+ desde Google Play
+4. ¡Listo! Abre la app y comienza
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔍 QUÉ PROBAR (Tareas sugeridas)
+
+SEMANA 1 - Features Principales:
+□ Completa el onboarding inicial
+□ Registra tu estado de ánimo 3 veces
+□ Conversa con la IA (mínimo 10 mensajes)
+□ Explora recursos educativos
+□ Prueba cambiar entre modo claro/oscuro
+
+SEMANA 2 - Features Sociales:
+□ Únete a 1-2 grupos de apoyo
+□ Participa en conversaciones de grupo
+□ Regístrate a una reunión (virtual o presencial)
+□ Prueba las notificaciones
+
+SEMANA 3 - Features Avanzadas:
+□ Realiza una evaluación clínica (PHQ-9 o GAD-7)
+□ Revisa tus gráficas de progreso
+□ Explora features premium
+□ Conecta con un psicólogo (si aplicable)
+
+SEMANA 4 - Pruebas de Estabilidad:
+□ Usa la app con conexión 3G/WiFi lenta
+□ Abre y cierra la app varias veces
+□ Prueba con batería baja
+□ Intenta diferentes escenarios de uso
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 CÓMO DAR FEEDBACK
+
+📋 FORMULARIO PRINCIPAL (Encuesta semanal - 2 minutos):
+🔗 https://forms.gle/emocionaliaplus-feedback
+[Reemplazar con tu Google Forms real]
+
+🐛 REPORTAR BUGS:
+🔗 https://forms.gle/emocionaliaplus-bugs
+[Reemplazar con tu Google Forms real]
+
+💡 SUGERENCIAS Y IDEAS:
+🔗 https://forms.gle/emocionaliaplus-ideas
+[Reemplazar con tu Google Forms real]
+
+📧 EMAIL DIRECTO:
+beta@emocionaliaplus.com
+
+💬 CANAL DE DISCORD/SLACK:
+[Link a tu servidor]
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏰ COMPROMISO DE TIEMPO
+
+• Duración total: 2-4 semanas
+• Tiempo por semana: 1-2 horas
+• Encuesta semanal: 2 minutos
+• Sesiones de feedback (opcionales): 1 hora cada 2 semanas
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎁 BENEFICIOS PARA TI
+
+Como beta tester recibirás:
+✨ 6 meses de Premium GRATIS (valor $60 USD)
+✨ Badge especial "Beta Tester" en la app
+✨ Acceso anticipado a nuevas features
+✨ Certificado digital de participación
+✨ Posibilidad de ganar premios adicionales
+
+🏆 TOP CONTRIBUTORS (Top 10 más activos):
+• 1 año de Premium gratis (valor $100 USD)
+• Merchandise exclusivo (camiseta, stickers)
+• Mención en el "About" de la app
+• Videollamada con el equipo fundador
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ PREGUNTAS FRECUENTES
+
+P: ¿Mis datos están seguros?
+R: ¡Absolutamente! Toda la información está encriptada y cumple con GDPR. Solo tú y (opcionalmente) tu psicólogo pueden ver tus datos.
+
+P: ¿Puedo dejar de ser beta tester?
+R: Sí, puedes salir en cualquier momento. Solo avísanos por email.
+
+P: ¿Qué pasa si encuentro un bug grave?
+R: Repórtalo inmediatamente al formulario de bugs o escríbenos a beta@emocionaliaplus.com. Priorizamos bugs críticos.
+
+P: ¿Puedo compartir la app con amigos?
+R: Por ahora es solo para beta testers invitados. Pero si conoces a alguien interesado, pídele que llene el formulario de inscripción.
+
+P: ¿La IA reemplaza a un psicólogo?
+R: No. La IA es un complemento de apoyo, pero nunca reemplaza terapia profesional. Para casos graves, siempre conectamos con profesionales.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💚 MENSAJE MOTIVACIONAL
+
+Tu participación en este beta testing es INVALUABLE. 
+
+Cada bug que reportes, cada sugerencia que compartas, cada minuto que dediques nos ayuda a crear una herramienta que puede cambiar vidas.
+
+En Ecuador y Latinoamérica, millones de personas sufren en silencio por falta de acceso a apoyo emocional. EmocionalIA+ busca democratizar la salud mental, hacerla accesible, cercana y sin estigma.
+
+Tú no solo estás probando una app. Estás ayudando a construir una comunidad de bienestar, un espacio seguro donde las personas puedan encontrar apoyo real cuando más lo necesitan.
+
+Eres parte de algo más grande. Eres parte del cambio.
+
+¡GRACIAS por creer en esta misión! 🙏💚
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 CONTACTO Y SOPORTE
+
+🌐 Web: https://emocionaliaplus.com
+📧 Email: beta@emocionaliaplus.com
+💬 Discord: [Link]
+📱 WhatsApp: [Número]
+🐦 Twitter/X: @emocionaliaplus
+📸 Instagram: @emocionaliaplus
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 PRÓXIMOS PASOS
+
+1. ✅ Instala la app siguiendo las instrucciones arriba
+2. ✅ Completa el onboarding
+3. ✅ Llena la encuesta inicial: [Link]
+4. ✅ Únete a nuestro canal de Discord/Slack
+5. ✅ ¡Comienza a explorar y a dar feedback!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+¡Bienvenido/a al equipo! 🎉
+
+Juntos vamos a hacer historia en salud mental digital 💚🧠
+
+- El equipo EmocionalIA+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VERSIÓN CORTA PARA WHATSAPP/TWITTER:
+
+🧠 ¡Únete al beta de EmocionalIA+! 
+
+App de salud mental con IA para Ecuador 🇪🇨
+
+✅ 6 meses Premium GRATIS
+✅ Influye en el producto final
+✅ Ayuda a democratizar la salud mental
+
+📱 Instala: [Link TestFlight/Play]
+📝 Feedback: [Link Forms]
+
+Duración: 2-4 semanas
+Tiempo: 1-2h/semana
+
+¡Sé parte del cambio! 💚
+
+#SaludMental #BetaTesting #EmocionalIA
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VERSIÓN PARA EMAIL:
+
+Asunto: 🧠 ¡Eres parte del Beta de EmocionalIA+!
+
+Hola [Nombre],
+
+¡Gracias por unirte al beta testing de EmocionalIA+! 🎉
+
+CÓMO EMPEZAR:
+→ iOS: Descarga TestFlight + abre [Link]
+→ Android: Abre [Link] y acepta el beta
+
+QUÉ PROBAR:
+Semana 1: Onboarding, mood tracker, chat IA
+Semana 2: Grupos de apoyo, notificaciones
+Semana 3: Evaluaciones clínicas, premium
+Semana 4: Pruebas de estabilidad
+
+FEEDBACK:
+📋 Encuesta semanal: [Link]
+🐛 Reportar bugs: [Link]
+💬 Discord: [Link]
+
+BENEFICIOS:
+✨ 6 meses Premium gratis ($60)
+✨ Badge exclusivo de beta tester
+✨ Certificado digital
+
+Compromiso: 1-2h/semana durante 2-4 semanas
+
+¿Preguntas? Escríbenos a beta@emocionaliaplus.com
+
+¡Muchas gracias por ayudarnos a mejorar! 💚
+
+El equipo EmocionalIA+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 Última actualización: 2025-01-20
+📌 Versión del script: 1.0
+🔖 ID de Beta: BETA-2025-Q1
