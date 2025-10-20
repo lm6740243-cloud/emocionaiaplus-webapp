@@ -3,8 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Heart, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const CircularMoodTracker = () => {
+  const { toast } = useToast();
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
 
   const moods = [
@@ -16,7 +19,7 @@ const CircularMoodTracker = () => {
   ];
 
   const handleMoodSelect = (level: number) => {
-    setSelectedMood(level);
+    setSelectedMood(prev => prev === level ? null : level);
   };
 
   const getCurrentMoodInfo = () => {
@@ -144,9 +147,35 @@ const CircularMoodTracker = () => {
           {selectedMood && (
             <Button 
               className="bg-gradient-primary hover:shadow-glow transition-all duration-300 animate-fade-in"
-              onClick={() => {
-                console.log("Mood saved:", selectedMood);
-                // Aquí guardarías en la BD
+              onClick={async () => {
+                try {
+                  // Save mood to database
+                  const { data: { user } } = await supabase.auth.getUser();
+                  if (user) {
+                    const { error } = await supabase
+                      .from('mood_entries')
+                      .insert({
+                        user_id: user.id,
+                        mood_level: selectedMood,
+                        created_at: new Date().toISOString()
+                      });
+                    
+                    if (error) throw error;
+                    
+                    toast({
+                      title: "Estado guardado",
+                      description: "Tu estado de ánimo se ha registrado correctamente"
+                    });
+                    setSelectedMood(null);
+                  }
+                } catch (error) {
+                  console.error("Error saving mood:", error);
+                  toast({
+                    title: "Error",
+                    description: "No se pudo guardar tu estado de ánimo",
+                    variant: "destructive"
+                  });
+                }
               }}
             >
               <Heart className="h-4 w-4 mr-2" />

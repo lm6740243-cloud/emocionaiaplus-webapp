@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 // For development: use Lovable preview URL
 // For production: comment out the server section or set to your production URL
 const config: CapacitorConfig = {
-  appId: 'app.lovable.77ff80669c5b40e7b3ed7ffe793f210e',
+  appId: 'app.emocionaliaplus.webapp',
   appName: 'EmocionalIA+',
   webDir: 'dist',
   // Uncomment the server section below for development with live reload

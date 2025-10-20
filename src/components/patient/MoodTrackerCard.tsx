@@ -5,8 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Slider } from "@/components/ui/slider";
 import { Calendar, TrendingUp, Heart, Plus, ChevronRight } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const MoodTrackerCard = () => {
+  const { toast } = useToast();
   const [currentMood, setCurrentMood] = useState([3]);
   const [showForm, setShowForm] = useState(false);
   const [notes, setNotes] = useState("");
@@ -33,11 +36,36 @@ const MoodTrackerCard = () => {
     return moodLabels[level as keyof typeof moodLabels] || moodLabels[3];
   };
 
-  const handleSubmit = () => {
-    // Aquí guardarías el registro de estado de ánimo
-    console.log("Mood:", currentMood[0], "Notes:", notes);
-    setShowForm(false);
-    setNotes("");
+  const handleSubmit = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { error } = await supabase
+          .from('mood_entries')
+          .insert({
+            user_id: user.id,
+            mood_level: currentMood[0],
+            notes: notes || null,
+            created_at: new Date().toISOString()
+          });
+        
+        if (error) throw error;
+        
+        toast({
+          title: "Estado guardado",
+          description: "Tu estado de ánimo se ha registrado correctamente"
+        });
+        setShowForm(false);
+        setNotes("");
+      }
+    } catch (error) {
+      console.error("Error saving mood:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo guardar tu estado de ánimo",
+        variant: "destructive"
+      });
+    }
   };
 
   return (

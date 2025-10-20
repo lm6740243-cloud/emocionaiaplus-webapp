@@ -82,7 +82,7 @@ const AIChat = () => {
 
   useEffect(() => {
     loadChatHistory();
-  }, [sessionId]);
+  }, []); // Remove sessionId dependency to prevent re-fetching on every render
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -106,15 +106,17 @@ const AIChat = () => {
         return;
       }
 
-      const formattedMessages: Message[] = data.map(msg => ({
-        id: msg.id,
-        content: msg.message,
-        role: msg.role as 'user' | 'assistant',
-        timestamp: new Date(msg.timestamp),
-        tone: msg.tone
-      }));
+      if (data && data.length > 0) {
+        const formattedMessages: Message[] = data.map(msg => ({
+          id: msg.id,
+          content: msg.message,
+          role: msg.role as 'user' | 'assistant',
+          timestamp: new Date(msg.timestamp),
+          tone: msg.tone
+        }));
 
-      setMessages(formattedMessages);
+        setMessages(formattedMessages);
+      }
     } catch (error) {
       console.error('Error loading chat history:', error);
     }
@@ -215,16 +217,21 @@ const AIChat = () => {
       if (error) throw error;
 
       const response = await data;
-      if (response.audioContent) {
+      if (response?.audioContent) {
         const audioBlob = new Blob([
           Uint8Array.from(atob(response.audioContent), c => c.charCodeAt(0))
         ], { type: 'audio/mp3' });
         
         const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
-        audio.play();
+        
+        audio.play().catch(err => {
+          console.error('Error playing audio:', err);
+          URL.revokeObjectURL(audioUrl);
+        });
         
         audio.onended = () => URL.revokeObjectURL(audioUrl);
+        audio.onerror = () => URL.revokeObjectURL(audioUrl);
       }
     } catch (error) {
       console.error('Error with text-to-speech:', error);
