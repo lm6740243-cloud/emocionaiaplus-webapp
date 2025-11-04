@@ -4,7 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { SubscriptionProvider } from "@/contexts/SubscriptionContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
@@ -24,6 +26,7 @@ import NotFound from "./pages/NotFound";
 
 const App = () => (
   <ThemeProvider>
+    <AuthProvider>
       <SubscriptionProvider>
         <TooltipProvider>
           <Toaster />
@@ -36,18 +39,18 @@ const App = () => (
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/onboarding" element={<Onboarding />} />
-                  <Route path="/paciente" element={<Paciente />} />
-                  <Route path="/psicologo" element={<Psicologo />} />
-                  <Route path="/configuracion" element={<Configuracion />} />
-                  <Route path="/configuracion/notificaciones" element={<NotificationSettings />} />
-                  <Route path="/recursos" element={<Recursos />} />
-                  <Route path="/grupos" element={<Grupos />} />
-                  <Route path="/grupos/crear" element={<CrearGrupo />} />
-                  <Route path="/grupos/:id" element={<GrupoChat />} />
-                  <Route path="/evaluaciones" element={<Evaluaciones />} />
-                  <Route path="/ai-chat" element={<AIChatPage />} />
-                  <Route path="/suscripcion" element={<Suscripcion />} />
-                  <Route path="/web3" element={<Web3Dashboard />} />
+                  <Route path="/paciente" element={<ProtectedRoute><Paciente /></ProtectedRoute>} />
+                  <Route path="/psicologo" element={<ProtectedRoute><Psicologo /></ProtectedRoute>} />
+                  <Route path="/configuracion" element={<ProtectedRoute><Configuracion /></ProtectedRoute>} />
+                  <Route path="/configuracion/notificaciones" element={<ProtectedRoute><NotificationSettings /></ProtectedRoute>} />
+                  <Route path="/recursos" element={<ProtectedRoute><Recursos /></ProtectedRoute>} />
+                  <Route path="/grupos" element={<ProtectedRoute><Grupos /></ProtectedRoute>} />
+                  <Route path="/grupos/crear" element={<ProtectedRoute><CrearGrupo /></ProtectedRoute>} />
+                  <Route path="/grupos/:id" element={<ProtectedRoute><GrupoChat /></ProtectedRoute>} />
+                  <Route path="/evaluaciones" element={<ProtectedRoute><Evaluaciones /></ProtectedRoute>} />
+                  <Route path="/ai-chat" element={<ProtectedRoute><AIChatPage /></ProtectedRoute>} />
+                  <Route path="/suscripcion" element={<ProtectedRoute><Suscripcion /></ProtectedRoute>} />
+                  <Route path="/web3" element={<ProtectedRoute><Web3Dashboard /></ProtectedRoute>} />
                   <Route path="/subscription-success" element={<div className="flex items-center justify-center min-h-screen"><div className="text-center"><h1 className="text-2xl font-bold text-green-600 mb-4">¡Suscripción Exitosa!</h1><p className="text-muted-foreground mb-4">Gracias por suscribirte a EmocionalIA+</p><button onClick={() => window.location.href = '/'} className="bg-primary text-primary-foreground px-4 py-2 rounded">Ir al Inicio</button></div></div>} />
                   <Route path="/subscription-canceled" element={<div className="flex items-center justify-center min-h-screen"><div className="text-center"><h1 className="text-2xl font-bold text-muted-foreground mb-4">Suscripción Cancelada</h1><p className="text-muted-foreground mb-4">Puedes intentar nuevamente cuando gustes</p><button onClick={() => window.location.href = '/suscripcion'} className="bg-primary text-primary-foreground px-4 py-2 rounded">Ver Planes</button></div></div>} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -58,7 +61,8 @@ const App = () => (
           </BrowserRouter>
         </TooltipProvider>
       </SubscriptionProvider>
-    </ThemeProvider>
+    </AuthProvider>
+  </ThemeProvider>
 );
 
 export default App;
